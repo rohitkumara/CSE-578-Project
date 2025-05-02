@@ -1,0 +1,70 @@
+/* container */
+.neumorphic-toggle {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 50%;
+    background: #f14b4b;          /* base color */
+    box-shadow:
+      8px 8px 16px rgba(0,0,0,0.2),
+     -8px -8px 16px rgba(255,255,255,0.6);
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #f0f0f0;
+    transition: box-shadow 0.2s;
+  }
+  /* pressed state */
+  .neumorphic-toggle:active {
+    box-shadow:
+      inset 4px 4px 8px rgba(0,0,0,0.2),
+     inset -4px -4px 8px rgba(255,255,255,0.6);
+  }
+  
+  /* hide one icon and show the other depending on state */
+  .neumorphic-toggle .icon.pause { display: none; }
+  .neumorphic-toggle.playing .icon.play  { display: none; }
+  .neumorphic-toggle.playing .icon.pause { display: block; }
+
+  body { font-family: Arial, sans-serif; position: relative; }
+  svg { display: block; margin: auto; }
+  .bar { cursor: pointer; }
+  .bar:hover { opacity: 1; stroke: #000; stroke-width: 2px; }
+  .flag { font-size: 32px; text-anchor: start; }
+  .value-label { fill: white; font-size: 12px; text-anchor: end; }
+  .year-title { font-weight: bold; font-size: 48px; fill: #888; text-anchor: middle; }
+  .axis text { font-size: 9px; text-anchor: end; }
+
+  #controls { text-align: center; margin: -100px 0 0 350px;}
+  #play { font-size: 16px; padding: 6px 16px; }
+  #industry-select { font-size: 14px; padding: 4px; margin-left: 8px; }
+
+  /* Legend styling */
+  #legend {
+    text-align: center;
+    font-size: 14px;
+    margin: 12px auto;
+  }
+  .legend-item {
+    display: inline-block;
+    margin: 0 12px;
+    vertical-align: middle;
+  }
+  .legend-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+
+  /* inline detail sparkline */
+  .inline-detail { pointer-events: none; }
+  /* detail-button styling */
+  .detail-btn circle { fill: #fff; stroke: #333; stroke-width: 1px; }
+  .detail-btn text   { font-size: 10px; pointer-events: none; }
+  
