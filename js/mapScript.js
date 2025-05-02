@@ -110,6 +110,7 @@ Promise.all([
       .attr("stroke-width",1.2)
       .attr("filter","url(#glow)")
       .on("mouseover", countryMouseOver)
+      .on("mousemove", countryMouseMove)
       .on("mouseout",  countryMouseOut);
 
   // 5) Dollar-icon group
@@ -139,6 +140,7 @@ Promise.all([
     .attr("y", height-50)
     .attr("width", W).attr("height", H)
     .attr("rx",5)
+    .style("fill","url(#legend-gradient)")
     .style("fill","url(#legend-gradient)")
     .attr("stroke","#aaa").attr("stroke-width",0.7);
   svg.append("text")
@@ -203,7 +205,7 @@ function getCountryData(d, year) {
 function countryMouseOver(event, d) {
   lastHoveredCountry = d;
   const data = getCountryData(d, currentYear);
-  tooltip.transition().duration(200).style("display","block").style("opacity",0.9);
+  tooltip.style("display","block").style("opacity",0.9);
   tooltip.html(data.tooltip)
     .style("left", Math.min(event.clientX+10, window.innerWidth-200)+"px")
     .style("top", (event.clientY-28)+"px");
@@ -215,8 +217,14 @@ function countryMouseOver(event, d) {
     .attr("fill", d3.color(getFill(d.key)).brighter(0.6));
 }
 
+function countryMouseMove(event, d) {
+  tooltip
+    .style("left", Math.min(event.clientX+10, window.innerWidth-200)+"px")
+    .style("top", (event.clientY-28)+"px");
+}
+
 function countryMouseOut() {
-  tooltip.transition().duration(300).style("opacity",0)
+  tooltip.style("opacity", 0)
     .on("end",()=>tooltip.style("display","none"));
   lastHoveredCountry = null;
   d3.select(this)

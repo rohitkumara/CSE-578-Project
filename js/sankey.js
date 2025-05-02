@@ -1,5 +1,7 @@
 
-const svg = d3.select("#sankey_svg"), width = +svg.attr("width"), height = +svg.attr("height");
+const svg = d3.select("#sankey_svg"), 
+width = svg.style("width").replace("px", ""), 
+height = svg.style("height").replace("px", "");
 const tooltip = d3.select("#sankey_tooltip");
 let useNetWorth = false;
 

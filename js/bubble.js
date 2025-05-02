@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         globalData = data;
         const selectedYearData = processDataForYear(data, currentYear);
 
-        createYearSelector(data);
         createColorScale(data);
         
         createIndustryBubbles(selectedYearData);
@@ -61,60 +60,6 @@ function createColorScale(data) {
             "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5",
             "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5"
         ]);
-}
-
-function createYearSelector(data) {
-    const years = [...new Set(data.map(d => d.Year))].sort();
-    const container = document.getElementById("bubble-chart").parentElement;
-    let selectorDiv = document.getElementById("year-selector");
-    
-    if (!selectorDiv) {
-        selectorDiv = document.createElement("div");
-        selectorDiv.id = "year-selector";
-        selectorDiv.style.textAlign = "center";
-        selectorDiv.style.marginBottom = "20px";
-        container.insertBefore(selectorDiv, document.getElementById("bubble-chart"));
-    }
-    
-    const select = document.createElement("select");
-    select.id = "year-select";
-    select.style.padding = "8px 16px";
-    select.style.fontSize = "16px";
-    select.style.borderRadius = "4px";
-
-    years.forEach(year => {
-        const option = document.createElement("option");
-        option.value = year;
-        option.text = year;
-        select.appendChild(option);
-    });
-    
-    select.value = years[years.length - 1];
-    currentYear = select.value;
-    
-    select.addEventListener("change", function() {
-        const oldYear = currentYear;
-        currentYear = this.value;
-        
-        const oldYearData = processDataForYear(globalData, oldYear);
-        const newYearData = processDataForYear(globalData, currentYear);
-        
-        updateChartWithTransition(oldYearData, newYearData);
-        
-        d3.select("#chart-title").text(`Industry With Most Billionaires In ${currentYear}`);
-    });
-    
-    const title = document.createElement("label");
-    title.htmlFor = "year-select";
-    title.textContent = "Select Year: ";
-    title.style.fontSize = "18px";
-    title.style.fontWeight = "bold";
-    title.style.marginRight = "10px";
-    
-    selectorDiv.appendChild(title);
-    selectorDiv.appendChild(select);
-    
-    yearSelector = select;
 }
 
 function processDataForYear(data, year) {

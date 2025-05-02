@@ -10,7 +10,6 @@
         <script type="module" src="https://unpkg.com/scrollama"></script>
 
         <!-- css files -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/body.css">
         <link rel="stylesheet" href="css/rarasani.css">
         <link rel="stylesheet" href="css/t.css">
@@ -23,15 +22,7 @@
             #cashIcons image {
                 opacity: 0.9;
                 pointer-events: none;
-            }
-            #mapChart {
-                display: block;
-                margin: 20px auto;
-                border: 1px solid #ddd;
-                background: #fff;
-                background-color: #f7eaf4;   
-          }
-        
+            }        
           </style>
     </head>
 
@@ -106,33 +97,25 @@
         <div class="svg-scroll-container" id="racebar-scroll-container">
             <div class="svg-container" id="racebar-container">
                 <svg id="chart-svg"></svg>
+                <!-- Region legend -->
+                <div id="legend" style="position: absolute; top: 80vh; left: 65vh;">
+                    <span class="legend-item">
+                    <span class="legend-color" style="background:#f57c00"></span> North America
+                    </span>
+                    <span class="legend-item">
+                    <span class="legend-color" style="background:#4f8bc9"></span> Asia
+                    </span>
+                    <span class="legend-item">
+                    <span class="legend-color" style="background:#f964a2"></span> Europe
+                    </span>
+                    <span class="legend-item">
+                    <span class="legend-color" style="background:#b76bbd"></span> South America
+                    </span>
+                </div>
             </div>
             <div class="scroll-steps-container" id="racebar-steps-container">
                 <!-- js injects x amount of steps here -->
             </div>
-        </div>
-        
-
-        <!-- Region legend -->
-        <div id="legend">
-            <span class="legend-item">
-            <span class="legend-color" style="background:#f57c00"></span> North America
-            </span>
-            <span class="legend-item">
-            <span class="legend-color" style="background:#4f8bc9"></span> Asia
-            </span>
-            <span class="legend-item">
-            <span class="legend-color" style="background:#f964a2"></span> Europe
-            </span>
-            <span class="legend-item">
-            <span class="legend-color" style="background:#b76bbd"></span> South America
-            </span>
-<!--             <span class="legend-item">
-            <span class="legend-color" style="background:#66baf1"></span> Oceania
-            </span>
-            <span class="legend-item">
-            <span class="legend-color" style="background:#888"></span> Africa
-            </span> -->
         </div>
 
         <!-- CHOROPLETH MAP CHART -->
