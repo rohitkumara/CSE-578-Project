@@ -17,3 +17,47 @@
     padding: 20px;
     z-index: -1;
 }
+
+#mapChart {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    margin: auto;
+    display: block;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+}
+
+.mapstep {
+    margin: 0 1 20vh 1;
+    height: 10vh;
+    width: 100%;
+    padding: 20px;
+    z-index: -1;
+}
+
+#maptooltip {
+    position: fixed;
+    background-color: #fff;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    pointer-events: none;
+    font-size: 14px;
+    color: #222;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.2s ease;
+    max-width: 250px;
+    line-height: 1.4;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    border: none;
+    border-left: 4px solid #4a90e2;
+    border-right: 4px solid #4a90e2;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    z-index: 9999;
+}
+

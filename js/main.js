@@ -89,14 +89,16 @@ const industryMap = {
   "Leisure":"Leisure"
 };
 
+const scroller = scrollama();
+
 // 2) Set up SVG + margins + groups
 
 const chartSvg  = d3.select("#chart-svg"),
       genderSvg = d3.select("#gender-chart-svg");
 
 const margin     = { top:50, right:180, bottom:190, left:260 },
-      W          = +chartSvg.attr("width"),
-      H          = +chartSvg.attr("height"),
+      W          = chartSvg.style("width").replace("px", ""),
+      H          = chartSvg.style("height").replace("px", ""),
       baseHeight = H,
       width      = W - margin.left - margin.right,
       height     = H - margin.top - margin.bottom;
@@ -128,6 +130,18 @@ const yearLabel = chartSvg.append("text")
 let openIndex    = null,
     detailHeight = 0,
     currentDate  = null;
+
+function step_injector(){
+    const steps = 23;
+    for(var i=0; i<=steps; i++){
+        const step = document.createElement("div");
+        step.className = "racestep";
+        step.dataset.step = `step${i}`;
+        step.textContent = `Step ${i}`;
+        document.getElementById("racebar-steps-container").appendChild(step);
+    }
+    console.log("[step_injector] steps injected");
+}
 
 // Toggles the little inline history chart under a bar
 function toggleInlineDetail(datum, containerG, history) {
@@ -205,9 +219,9 @@ function toggleInlineDetail(datum, containerG, history) {
     .attr("y", baseYearY + shift);
 }
 
-
 // Load data & fire everything up
 d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
+    step_injector();
   raw.forEach(d => {
     d.net  = +d.net_worth.replace(/[^0-9.]/g,"");
     d.date = new Date(+d.year,0,1);
@@ -260,23 +274,7 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
   updateRace(dates[0], byYear.get(years[0]));
   updateGenderIcons(categories[0]);
 
-  // WIRE UP SCROLL‐TO‐SCRUB
-  const svgNode = chartSvg.node();
-  const scrollSensitivity = 0.1;  
-  svgNode.addEventListener("wheel", e => {
-    e.preventDefault();
-    // accumulate horizontal scroll (fallback to vertical if no horizontal wheel)
-    const raw = (e.deltaX !== 0 ? e.deltaX : e.deltaY);
-    scrollOffset += raw * scrollSensitivity;
-    scrollOffset = Math.max(0, Math.min(scrollOffset, width));
-
-    // invert to Date, snap to full‐year, update
-    const dt   = timelineScale.invert(scrollOffset),
-          yr   = dt.getFullYear(),
-          date = new Date(yr,0,1);
-
-    updateRace(date, byYear.get(yr));
-  });
+  handleScroll();
 
   // ───────────────────────────────────────────────────────────────
   function updateRace(date, dataForYear) {
@@ -303,56 +301,85 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
         .tickFormat("")
       );
 
-    // JOIN
     const groups = chart.selectAll(".bar-group")
-      .data(top10, d=>d.full_name);
-    groups.exit().remove();
+    .data(top10, d => d.full_name)
+    .join(
+    enter => {
+        const g = enter.append("g")
+            .attr("class", "bar-group")
+            .attr("transform", d => `translate(0, ${y(d.label)})`);
 
-    // ENTER
-    const ge = groups.enter().append("g")
-      .attr("class","bar-group")
-      .attr("transform", d=>`translate(0,${y(d.label)})`);
+        g.append("text")
+            .attr("class", "name-label")
+            .attr("x", -10)
+            .attr("y", y.bandwidth() / 2 + 5)
+            .attr("text-anchor", "end")
+            .text(d => d.label);
 
-    ge.append("text")
-      .attr("class","name-label")
-      .attr("x",-10)
-      .attr("y",y.bandwidth()/2+5)
-      .attr("text-anchor","end")
-      .text(d=>d.label);
+        g.append("rect")
+            .attr("class", "bar")
+            .attr("y", 0)
+            .attr("height", y.bandwidth())
+            .attr("width", 0)
+            .attr("fill", d => regionColor[countryRegion[d.country_of_citizenship] || "Africa"])
+            .on("mouseover", function () { d3.select(this).attr("opacity", 0.7); })
+            .on("mouseout", function () { d3.select(this).attr("opacity", 1); })
+            .on("click", (ev, d) => toggleInlineDetail(
+                d,
+                d3.select(ev.currentTarget.parentNode),
+                dataByName.get(d.full_name)
+            ))
+            .transition().duration(600)
+            .attr("width", d => x(d.net));
 
-    ge.append("rect")
-      .attr("class","bar")
-      .attr("y",0)
-      .attr("height", y.bandwidth())
-      .attr("width", 0)
-      .on("mouseover", function(){ d3.select(this).attr("opacity",0.7); })
-      .on("mouseout",  function(){ d3.select(this).attr("opacity",1); })
-      .on("click", (ev,d) => toggleInlineDetail(
-        d,
-        d3.select(ev.currentTarget.parentNode),
-        dataByName.get(d.full_name)
-      ));
+        g.append("text")
+            .attr("class", "flag")
+            .attr("x", 0)
+            .attr("y", y.bandwidth() / 2 + 10)
+            .text(d => flagEmoji[d.country_of_citizenship] || "")
+            .transition().duration(600)
+            .attr("x", d => x(d.net) + 6)
+            .attr("y", y.bandwidth() / 2 + 10);
 
-    ge.append("text").attr("class","flag");
-    ge.append("text").attr("class","value-label").attr("text-anchor","end");
+        g.append("text")
+            .attr("class", "value-label")
+            .attr("text-anchor", "end")
+            .attr("x", d => x(d.net) - 6)
+            .attr("y", y.bandwidth() / 2 + 5)
+            .text(d => d.net + " B");
 
-    const allG = ge.merge(groups);
-    allG.transition().duration(600)
-      .attr("transform", d=>`translate(0,${y(d.label)})`);
+        return g;
+    },
+    update => {
+        update.transition().duration(600)
+            .attr("transform", d => `translate(0, ${y(d.label)})`);
 
-    allG.select("rect.bar").transition().duration(600)
-      .attr("width", d=>x(d.net))
-      .attr("fill",  d=>regionColor[countryRegion[d.country_of_citizenship]||"Africa"]);
+        update.select("rect.bar")
+            .transition().duration(600)
+            .attr("width", d => x(d.net))
+            .attr("height", y.bandwidth())
+            .attr("fill", d => regionColor[countryRegion[d.country_of_citizenship] || "Africa"]);
 
-    allG.select("text.flag").transition().duration(600)
-      .attr("x", d=>x(d.net)+6)
-      .attr("y", y.bandwidth()/2+10)
-      .text(d=>flagEmoji[d.country_of_citizenship]||"");
+        update.select("text.name-label")
+            .transition().duration(600)
+            .attr("y", y.bandwidth() / 2 + 5);
 
-    allG.select("text.value-label").transition().duration(600)
-      .attr("x", d=>x(d.net)-6)
-      .attr("y", y.bandwidth()/2+5)
-      .text(d=>d.net+" B");
+        update.select("text.flag")
+            .transition().duration(600)
+            .attr("x", d => x(d.net) + 6)
+            .attr("y", y.bandwidth() / 2 + 10)
+            .text(d => flagEmoji[d.country_of_citizenship] || "");
+
+        update.select("text.value-label")
+            .transition().duration(600)
+            .attr("x", d => x(d.net) - 6)
+            .attr("y", y.bandwidth() / 2 + 5)
+            .text(d => d.net + " B");
+
+        return update;
+    },
+    exit => exit.transition().duration(300).style("opacity", 0).remove()
+  );
 
     // move playhead, yearLabel & bottom axis back to base position
     const px = margin.left + timelineScale(date);
@@ -393,5 +420,19 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
       .attr("x", (_,i)=> margin.left + i*(40+8))
       .attr("y", (60-40)/2);
   }
+
+  function handleScroll(){
+    console.log("[handleScroll]");
+    scroller    
+        .setup({
+            step: '.racestep',
+            offset: 0.5,
+            debug: true
+        })
+        .onStepEnter(function(d){
+            const step = d.index;
+            updateRace(dates[step], byYear.get(years[step]));
+        })
+}
 
 }); // end d3.csv

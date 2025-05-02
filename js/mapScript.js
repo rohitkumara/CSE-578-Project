@@ -1,5 +1,7 @@
 // mapscript.js
 
+const scroller = scrollama();
+
 // — Globals & setup —
 let lastHoveredCountry = null,
     processedData      = {},
@@ -8,21 +10,22 @@ let lastHoveredCountry = null,
     iconGroup,         // dollar-icon group
     colorScale;
 
-// DOM elements for slider & labels
-const slider    = document.getElementById("yearSlider"),
-      yearValue = document.getElementById("yearValue"),
-      yearLabel = document.getElementById("yearLabel");
+let currentYear = "1997"; // default year
 
-// start at the slider’s minimum (1997)
-let currentYear = +slider.min;
-slider.value         = currentYear;
-yearValue.textContent = currentYear;
-yearLabel.textContent = currentYear;
+const steps = 27;
+for(var i=0; i<=steps; i++){
+  const step = document.createElement("div");
+  step.className = "mapstep";
+  step.dataset.step = `step${i}`;
+  step.textContent = `Step ${i}`;
+  document.getElementById("mapchart-steps-container").appendChild(step);
+}
+console.log("[step_injector] steps injected");
 
 const svg     = d3.select("#mapChart"),
-      width   = +svg.attr("width"),
-      height  = +svg.attr("height"),
-      tooltip = d3.select("#tooltip");
+      width   = svg.style("width").replace("px", ""),
+      height  = svg.style("height").replace("px", ""),
+      tooltip = d3.select("#maptooltip");
 
 const projection = d3.geoNaturalEarth1()
     .scale(width / 1.3 / Math.PI)
@@ -55,14 +58,6 @@ const countryNameFixes = {
   "republic of moldova":"moldova","lao people's democratic republic":"laos",
   "brunei darussalam":"brunei","czechia":"czech republic","swaziland":"eswatini"
 };
-
-// manual slider still works
-slider.addEventListener("input", () => {
-  currentYear = +slider.value;
-  yearValue.textContent = currentYear;
-  yearLabel.textContent = currentYear;
-  updateMap(true);
-});
 
 // — Load data, precompute & draw —
 Promise.all([
@@ -166,6 +161,8 @@ Promise.all([
 
   // 8) Initial icons
   updateIcons();
+
+  handleScroll();
 });
 
 // — helper to get fill color —
@@ -208,8 +205,8 @@ function countryMouseOver(event, d) {
   const data = getCountryData(d, currentYear);
   tooltip.transition().duration(200).style("display","block").style("opacity",0.9);
   tooltip.html(data.tooltip)
-    .style("left", Math.min(event.pageX+10, window.innerWidth-200)+"px")
-    .style("top", (event.pageY-28)+"px");
+    .style("left", Math.min(event.clientX+10, window.innerWidth-200)+"px")
+    .style("top", (event.clientY-28)+"px");
   d3.select(this)
     .transition().duration(200)
     .attr("stroke","#FFD700")
@@ -217,6 +214,7 @@ function countryMouseOver(event, d) {
     .attr("transform","scale(1.02)")
     .attr("fill", d3.color(getFill(d.key)).brighter(0.6));
 }
+
 function countryMouseOut() {
   tooltip.transition().duration(300).style("opacity",0)
     .on("end",()=>tooltip.style("display","none"));
@@ -255,27 +253,18 @@ function updateIcons() {
       .attr("y", d => d.y);
 }
 
-// — HORIZONTAL WHEEL SCRUBBING —  
-;(function(){
-  const minYear = +slider.min, maxYear = +slider.max;
-  const svgNode = svg.node();
-  let scrollOffset = (currentYear - minYear) / (maxYear - minYear) * width;
-  const scrollSensitivity = 0.2;
-
-  svgNode.addEventListener("wheel", e => {
-    e.preventDefault();
-    const delta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
-    scrollOffset = Math.max(0, Math.min(width, scrollOffset + delta * scrollSensitivity));
-
-    const pct     = scrollOffset / width;
-    const newYear = Math.round(minYear + pct * (maxYear - minYear));
-
-    if (newYear !== currentYear) {
-      currentYear = newYear;
-      slider.value         = newYear;
-      yearValue.textContent = newYear;
-      yearLabel.textContent = newYear;
-      updateMap(false);
-    }
-  });
-})();
+function handleScroll(){
+  console.log("[handleScroll]");
+  scroller    
+      .setup({
+          step: '.mapstep',
+          offset: 0.5,
+          debug: true
+      })
+      .onStepEnter(function(d){
+          const step = d.index;
+          currentYear = 1997 + step + "";
+          // console.log("currentYear", currentYear);
+          updateMap(true);
+      })
+}

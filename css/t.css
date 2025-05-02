@@ -30,8 +30,6 @@
   .neumorphic-toggle.playing .icon.play  { display: none; }
   .neumorphic-toggle.playing .icon.pause { display: block; }
 
-  /* body { font-family: Arial, sans-serif; position: relative; } */
-  svg { display: block; margin: auto; }
   .bar { cursor: pointer; }
   .bar:hover { opacity: 1; stroke: #000; stroke-width: 2px; }
   .flag { font-size: 32px; text-anchor: start; }
@@ -68,3 +66,21 @@
   .detail-btn circle { fill: #fff; stroke: #333; stroke-width: 1px; }
   .detail-btn text   { font-size: 10px; pointer-events: none; }
   
+  #chart-svg {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    margin: auto;
+    display: block;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+  }
+
+  .racestep {
+    margin: 0 1 20vh 1;
+    height: 10vh;
+    width: 100%;
+    padding: 20px;
+}
