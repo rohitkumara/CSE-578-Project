@@ -17,7 +17,7 @@ for(var i=0; i<=steps; i++){
   const step = document.createElement("div");
   step.className = "mapstep";
   step.dataset.step = `step${i}`;
-  step.textContent = `Step ${i}`;
+  // step.textContent = `Step ${i}`;
   document.getElementById("mapchart-steps-container").appendChild(step);
 }
 console.log("[step_injector] steps injected");
@@ -259,7 +259,7 @@ function handleScroll(){
       .setup({
           step: '.mapstep',
           offset: 0.5,
-          debug: true
+          debug: false
       })
       .onStepEnter(function(d){
           const step = d.index;

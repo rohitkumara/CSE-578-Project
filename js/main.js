@@ -137,7 +137,7 @@ function step_injector(){
         const step = document.createElement("div");
         step.className = "racestep";
         step.dataset.step = `step${i}`;
-        step.textContent = `Step ${i}`;
+        // step.textContent = `Step ${i}`;
         document.getElementById("racebar-steps-container").appendChild(step);
     }
     console.log("[step_injector] steps injected");
@@ -427,7 +427,7 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
         .setup({
             step: '.racestep',
             offset: 0.5,
-            debug: true
+            debug: false
         })
         .onStepEnter(function(d){
             const step = d.index;
