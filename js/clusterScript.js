@@ -1,3 +1,5 @@
+const scroller = scrollama();
+
 (() => {
     d3.csv("dataset/all_billionaires_1997_2024.csv", d => {
         d.year = +d.year;
@@ -18,22 +20,34 @@
                 .sort((a, b) => b.net_worth - a.net_worth)
                 .slice(0, 5);
         });
-    
+        
+        const steps = 2024 - 1997;
+        for(var i=0; i<=steps; i++){
+            const step = document.createElement("div");
+            step.className = "clusterstep";
+            step.dataset.step = `step${i}`;
+            // step.textContent = `Step ${i}`;
+            document.getElementById("cluster-steps-container").appendChild(step);
+        }
+        console.log("[step_injector] steps injected");
+
         initializeClusterChart(yearly_top5_dict);
     });
     
     function initializeClusterChart(yearly_top5_dict) {
-        let currentYear = 2024;
+        let currentYear = 1997;
+        let preYear = 1997;
         let playing = false;
         let timer = null;
     
         const svg = d3.select("#dynamicClusterChart");
-        const width = +svg.attr("width");
-        const height = +svg.attr("height");
+        const width = svg.style("width").replace("px", "");
+        const height = svg.style("height").replace("px", "");
+
+        console.log(svg, width, height)
 
         const tooltip = d3.select("#clusterTooltip");
 
-        
         const rankColors = d3.scaleOrdinal()
             .domain([1, 2, 3, 4, 5])
             .range(["#FFD700", "#FF69B4", "#CD7F32", "#4CAF50", "#7B68EE"]);  
@@ -56,12 +70,15 @@
         }
     
         function updateClusterChart(year) {
+            console.log("Calling updateClusterChart with year:", year);
             const top5 = yearly_top5_dict[year];
+       
             if (!top5) return;
-        
+
             const nodesData = generateNodes(top5);
         
             svg.selectAll("*").remove();
+            
             svg.append("text")
             .attr("class", "year-label")
             .attr("x", width - 100)  
@@ -99,8 +116,7 @@
                 .on("mouseover", (event, d) => showTooltip(event, d.name, top5))
                 .on("mousemove", (event) => moveTooltip(event))
                 .on("mouseout", hideTooltip);
-        
-            
+
             const simulation = d3.forceSimulation(nodesData)
                 .force("charge", d3.forceManyBody().strength(5))
                 .force("center", d3.forceCenter(width / 2, height / 2))
@@ -119,7 +135,10 @@
                 .restart();
         
             simulation.on("tick", () => {
-                nodes.attr("cx", d => d.x).attr("cy", d => d.y);
+                nodes
+                    .attr("cx", d => {
+                        return d.x})
+                    .attr("cy", d => d.y);
 
                 labels
                     .attr("x", d => {
@@ -225,30 +244,25 @@
         function hideTooltip() {
             tooltip.style("display", "none");
         }
-    
-        updateClusterChart(currentYear);
-    
-        document.getElementById("clusterYearSlider").addEventListener("input", function() {
-            currentYear = +this.value;
-            document.getElementById("clusterYearValue").textContent = currentYear;
-            updateClusterChart(currentYear);
-        });
         
-    
-        document.getElementById("clusterPlayButton").addEventListener("click", function() {
-            if (!playing) {
-                playing = true;
-                this.value = "Pause";
-                timer = setInterval(() => {
-                    currentYear = currentYear < 2024 ? currentYear + 1 : 1997;
-                    document.getElementById("clusterYearSlider").value = currentYear;
+        function handleScroll(){
+            scroller    
+                .setup({
+                    step: '.clusterstep',
+                    offset: 0.5,
+                    debug: false
+                })
+                .onStepEnter(function(d){
+                    const step = d.index;
+                    currentYear = 1997 + step;
+                    if(currentYear == preYear){
+                        return;
+                    }
+                    preYear = currentYear;
                     updateClusterChart(currentYear);
-                }, 3000);
-            } else {
-                playing = false;
-                this.value = "Play";
-                clearInterval(timer);
-            }
-        });
+                })
+        }
+        updateClusterChart(currentYear);
+        handleScroll();
     }
 })();
