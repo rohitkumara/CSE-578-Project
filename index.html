@@ -183,33 +183,44 @@
         </div>
 
         <!-- GLYPH CHART -->
-        <h1>Who Wants to Become a Billionaire?</h1>
-        <p>Click a glyph to reveal their educational journey!</p>
 
-        <div class="dropdown-container">
-            <label for="industry">Select Industry: </label>
-            <select id="industry">
-                <option value="Tech" selected>Tech</option>
-                <option value="Finance">Finance</option>
-                <option value="Retail">Retail</option>
-                <option value="Telecom">Telecom</option>
-                <option value="Media">Media</option>
-                <option value="Manufacturing">Manufacturing</option>
-                <option value="Real Estate">Real Estate</option>
-            </select>
+        <div class="svg-scroll-container" id="glyph-distribution">
+            <div class="svg-container" id="glyph-container">
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Who Wants to Become a Billionaire?</h1>
+                        <h1 class="text-center">Click a glyph to reveal their educational journey!</h1>
+                    </header>
+                </div>
+                <div class="dropdown-container">
+                    <label for="industry">Select Industry: </label>
+                    <select id="industry">
+                        <option value="Tech" selected>Tech</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Telecom">Telecom</option>
+                        <option value="Media">Media</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Real Estate">Real Estate</option>
+                    </select>
+                </div>
+                <div class="chart-container" id="chart"></div>
+                <div class="overlay" id="overlay"></div>
+                <div class="popup" id="popup">
+                    <h2 id="popup-name"></h2>
+                    <p><strong>University:</strong> <span id="popup-university"></span></p>
+                    <p><strong>Graduation Year:</strong> <span id="popup-year"></span></p>
+                    <p><strong>Education Status:</strong> <span id="popup-status"></span></p>
+                </div>
+            </div>
+            <div class="scroll-steps-container" id="glyph-steps-container">
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+            </div>
         </div>
-
-        <div class="chart-container" id="chart"></div>
-
-        <!-- Overlay and popup -->
-        <div class="overlay" id="overlay"></div>
-        <div class="popup" id="popup">
-        <h2 id="popup-name"></h2>
-        <p><strong>University:</strong> <span id="popup-university"></span></p>
-        <p><strong>Graduation Year:</strong> <span id="popup-year"></span></p>
-        <p><strong>Education Status:</strong> <span id="popup-status"></span></p>
-        </div>
-
+        
         <!-- SANKEY CHART -->
         <div class="sankey_tooltip" id="sankey_tooltip"></div>
         <div class="svg-scroll-container" id="sankey-distribution">
