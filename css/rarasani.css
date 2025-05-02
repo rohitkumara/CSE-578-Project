@@ -1,0 +1,128 @@
+
+body {
+    background-color: #ffffff;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.scroll-steps-container {
+    position: relative;
+    margin-top: -45vh;
+    padding-bottom: 50vh;
+}
+
+.svg-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+svg {
+    width: 60%;
+    height: 60%;
+    background-color: rgb(255, 255, 255);
+}
+
+#bloom_svg {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    margin: auto;
+    display: block;
+}
+
+#histogram_svg {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    margin: auto;
+    display: block;
+}
+
+.bloomstep {
+    margin: 0 1 20vh 1;
+    height: 10vh;
+    width: 100%;
+    padding: 20px;
+}
+.histstep {
+    margin: 0 1 20vh 1;
+    height: 10vh;
+    width: 100%;
+    padding: 20px;
+}
+
+#bloom-left-highlight {
+    background-color: rgba(240, 240, 240, 0.9);
+    border-radius: 10px;
+    padding: 5px;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    width: 400px;
+    position: absolute;
+    top: 17%;
+    left: 5%;
+    opacity: 1;
+    z-index: 11;;
+}
+#bloom-left-highlight p {
+    margin: 0;
+}
+
+#middle-highlight {
+    background-color: rgba(240, 240, 240, 0.9);
+    border-radius: 10px;
+    padding: 5px;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    width: 300px;
+    position: absolute;
+    top: 20%;
+    left: 55%;
+    opacity: 0;
+    z-index: 11;
+}
+#middle-highlight p {
+    margin: 0;
+}
+
+#left-highlight {
+    background-color: rgba(240, 240, 240, 0.9);
+    border-radius: 10px;
+    padding: 5px;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    width: 150px;
+    position: absolute;
+    top: 47%;
+    left: 25%;
+    opacity: 0;
+    z-index: 11;;
+}
+#left-highlight p {
+    margin: 0;
+}
+
+#right-highlight {
+    background-color: rgba(240, 240, 240, 0.9);
+    border-radius: 10px;
+    padding: 5px;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    width: 150px;
+    position: absolute;
+    top: 53%;
+    left: 75%;
+    opacity: 0;
+    z-index: 11;
+}
+#right-highlight p {
+    margin: 0;
+}
