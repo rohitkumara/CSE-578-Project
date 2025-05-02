@@ -62,7 +62,7 @@ function drawHistogram(){
     // console.log(bins);
 
     y = d3.scaleLinear()
-        .domain([0, d3.max(bins, function(d) { 
+        .domain([0, 31 + d3.max(bins, function(d) { 
             return sumTotal(d);
          })])
         .range([innerHeight, 0]);
@@ -107,9 +107,10 @@ function updateHistogram(step){
     
     // 830 × 467
     const coinSize = 467 / 20;
+    const coinWidth = 830 / 20;
     const pplPerCoin = 20;
     y = d3.scaleLinear()
-        .domain([0, d3.max(bins, function(d) { 
+        .domain([0, 31 + d3.max(bins, function(d) { 
             return sumTotal(d);
          })])
         .range([0, innerHeight]);
@@ -126,7 +127,8 @@ function updateHistogram(step){
                     return "translate(" + (margin.left + x(d.x0)) + "," + (margin.top) + ")"; 
                 })
                 g.each(function(d){
-                    var noOfCoins = Math.ceil((sumTotal(d))/pplPerCoin);
+                    console.log(sumTotal(d), y(sumTotal(d)), y(sumTotal(d))/(coinSize-10))
+                    var noOfCoins = Math.ceil((y(sumTotal(d))/(coinSize-10)));
                     // console.log(d, noOfCoins);
                     var coins = d3.select(this).selectAll(".coin")
                         .data(d3.range(noOfCoins), function(d, i){
@@ -137,7 +139,7 @@ function updateHistogram(step){
                         .attr("class", "coin")
                         .attr("x", 0)
                         .attr("y", 0)
-                        .attr("width", coinSize)
+                        .attr("width", coinWidth)
                         .attr("height", coinSize)
                         .attr("href", "imgs/coin.png")
                         .attr("opacity", 0)
@@ -149,7 +151,7 @@ function updateHistogram(step){
                         .ease(d3.easeBounceOut)
                         .attr("opacity", 1)
                         .attr("y", function(i){
-                            return (innerHeight - coinSize) - y(i * pplPerCoin);
+                            return (innerHeight - coinSize) - i * (coinSize-10);
                         })
                 })
             },
@@ -181,7 +183,7 @@ function updateHistogram(step){
             function(exit){
                 exit.each(function(d){
                     var b = d3.select(this);
-                    var noOfCoins = Math.ceil((sumTotal(d))/pplPerCoin);
+                    var noOfCoins = Math.ceil((y(sumTotal(d))/(coinSize-10)));
                     var coins = b.selectAll(".coin")
                         .data(d3.range(noOfCoins), function(d, i){
                             // console.log("range", i, noOfCoins)

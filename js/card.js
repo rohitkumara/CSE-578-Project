@@ -1,7 +1,7 @@
 let billionaireList = [];
 let name = {};
 let scrollPos = 0;
-let scrollSpeed = 0.6;
+let scrollSpeed = 1.5;
 let scrollPaused = false;
 let cardW, totalW;
 
@@ -175,7 +175,7 @@ function showProfileCard(fName) {
             const imgPath = `./imgs/top10_billionaires_images/${fName}.${fileExt}`;
             
             profileCard.innerHTML = `
-                <div class="detail-header">
+                <div class="detail-header" style="z-index: 201;">
                     <div class="detail-image">
                         <img src="${imgPath}" alt="${billionaireInfo[0]}">
                     </div>
@@ -214,9 +214,10 @@ function showProfileCard(fName) {
             if (!darkOverlay) {
                 darkOverlay = document.createElement('div');
                 darkOverlay.className = 'overlay';
-                darkOverlay.onclick = hideProfileCard;
+                // darkOverlay.onclick = hideProfileCard;
                 document.body.appendChild(darkOverlay);
             }
             darkOverlay.style.display = 'block';
+            document.addEventListener('click', hideProfileCard);
         })
 }

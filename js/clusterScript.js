@@ -61,8 +61,10 @@ const scroller = scrollama();
                     nodes.push({ 
                         id: `${d.name}-${i}`, 
                         group: d.name, 
-                        radius: 4, 
-                        rank: index + 1   
+                        radius: 10, 
+                        rank: index + 1,
+                        // x: width * ((index + 1) / 6),
+                        // y: height/2
                     });
                 }
             });
@@ -100,7 +102,6 @@ const scroller = scrollama();
                 .on("mouseover", (event, d) => showTooltip(event, d.group, top5))
                 .on("mousemove", (event) => moveTooltip(event))
                 .on("mouseout", hideTooltip);
-        
             
             const labels = svg.selectAll(".billionaire-label")
                 .data(top5)
@@ -177,10 +178,11 @@ const scroller = scrollama();
                 const row = rankLegend.append("g")
                     .attr("transform", `translate(0, ${i * 20})`);
 
-                row.append("circle")
-                    .attr("r", 7)
-                    .attr("cx", 7.5)
-                    .attr("cy", 7.5)
+                row.append("rect")
+                    .attr("x", 0)
+                    .attr("y", 4)
+                    .attr("width", 9)
+                    .attr("height", 9)
                     .attr("fill", d.color);
                 
 
@@ -237,8 +239,8 @@ const scroller = scrollama();
         }
 
         function moveTooltip(event) {
-            tooltip.style("left", (event.pageX + 15) + "px")
-                .style("top", (event.pageY - 20) + "px");
+            tooltip.style("left", (event.clientX + 15) + "px")
+                .style("top", (event.clientY - 20) + "px");
         }
 
         function hideTooltip() {

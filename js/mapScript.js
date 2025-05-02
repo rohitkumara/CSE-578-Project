@@ -27,9 +27,13 @@ const svg     = d3.select("#mapChart"),
       height  = svg.style("height").replace("px", ""),
       tooltip = d3.select("#maptooltip");
 
-const projection = d3.geoNaturalEarth1()
-    .scale(width / 1.3 / Math.PI)
-    .translate([width / 2, height / 2]);
+// const projection = d3.geoNaturalEarth1()
+//     .scale(width / 1.3 / Math.PI)
+//     .translate([width / 2, height / 2]);
+
+const projection = d3.geoMercator()
+    .scale(width / 1.8 / Math.PI)
+    .translate([width / 2, height / 2 + 70]);
 
 const path = d3.geoPath().projection(projection);
 
@@ -272,7 +276,9 @@ function handleScroll(){
       .onStepEnter(function(d){
           const step = d.index;
           currentYear = 1997 + step + "";
-          // console.log("currentYear", currentYear);
+          var year_span = document.getElementById("year");
+          console.log(year_span)
+
           updateMap(true);
       })
 }

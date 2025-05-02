@@ -123,7 +123,7 @@
         <div id="maptooltip" class="maptooltip"></div>
         <div class="svg-scroll-container" id="mapchart-scroll-container">
             <div class="svg-container" id="mapchart-container">
-                <p style="text-align: centre; font-size: 40px; margin-left: 40px; margin-top: 20px">Global Billionaire Wealth by Country <span id="year">1997</span></p>
+                <p style="text-align: centre; font-size: 40px; margin-left: 40px; margin-top: 20px">Global Billionaire Wealth by Country</p>
                 <svg id="mapChart"></svg></div>
             <div class="scroll-steps-container" id="mapchart-steps-container">
                 <!-- js injects x amount of steps here -->
@@ -135,9 +135,9 @@
             <div class="svg-container" id="histogram-container">
                 <p style="font-size: 40px; margin-left: 40px; margin-top: 20px">6. Age at which Billionaires made their first billion</p>
                 <svg id="histogram_svg"></svg>
-                <div id="middle-highlight"><p>Most billionaires made their first billion at the age 55-60</p></div>
-                <div id="left-highlight"><p>Youngest are billionaires who made their money through inherited shares or company at 18/19</p></div>
-                <div id="right-highlight"><p>It's never too late to start! A few billionaires made their first billion between ages 95-100</p></div>
+                <div class="info_box" id="middle-highlight"><p>Most billionaires made their first billion at the age 55-60</p></div>
+                <div class="info_box" id="left-highlight"><p>Youngest are billionaires who made their money through inherited shares or company at 18/19</p></div>
+                <div class="info_box" id="right-highlight"><p>It's never too late to start! A few billionaires made their first billion between ages 95-100</p></div>
             </div>
             <div class="scroll-steps-container" id="histogram-steps-container">
                 <!-- js injects x amount of steps here -->
@@ -208,14 +208,23 @@
         </div>
 
         <!-- Industry dropdown + gender‐icon row CHART -->
-        <div id="gender-distribution" style="text-align:center; margin:20px;">
-            <label for="industry-select">Industry:</label>
-            <select id="industry-select"></select>
-            <svg id="gender-chart-svg" width="960" height="60"></svg>
+        <div class="svg-scroll-container" id="gender-distribution">
+            <div class="svg-container" id="gender-container">
+                <p style="font-size: 40px; margin-left: 40px; margin-top: 20px">Gender ratio in various industries</p>
+                <div id="g-dist" style="text-align:center; margin:20px;">
+                    <label for="industry-select">Industry:</label>
+                    <select id="industry-select"></select>
+                </div>
+                <svg id="gender-chart-svg" width="960" height="60"></svg>
+            </div>
+            <div class="scroll-steps-container" id="bloom-steps-container">
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+            </div>
         </div>
 
         <!-- CLUSTER CHART -->
-        <div id="clusterTooltip" class="tooltip"></div>
+        <div id="clusterTooltip" class="clusterTooltip"></div>
         <div class="svg-scroll-container" id="cluster-scroll-container">
             <div class="svg-container" id="cluster-container">
                 <h2>Top 5 Billionaires' Net Wealth</h2>

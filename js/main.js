@@ -398,30 +398,40 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
   }
 
   // ───────────────────────────────────────────────────────────────
-  function updateGenderIcons(category) {
+function updateGenderIcons(category) {
+    var W = genderSvg.style("width").replace("px", "");
+    var H = genderSvg.style("height").replace("px", "");
+
     const subset      = raw.filter(d=>d.industry===category),
-          maleCount   = subset.filter(d=>d.gender==="Male").length,
-          femaleCount = subset.filter(d=>d.gender==="Female").length,
-          totalKnown  = maleCount + femaleCount,
-          maleIcons   = totalKnown ? Math.round(maleCount/totalKnown*10) : 5,
-          femaleIcons = 10 - maleIcons,
-          iconsData   = [
+            maleCount   = subset.filter(d=>d.gender==="Male").length,
+            femaleCount = subset.filter(d=>d.gender==="Female").length,
+            totalKnown  = maleCount + femaleCount,
+            maleIcons   = totalKnown ? Math.round(maleCount/totalKnown*10) : 5,
+            femaleIcons = 10 - maleIcons,
+            iconsData   = [
             ...Array(femaleIcons).fill("female"),
             ...Array(maleIcons).fill("male")
-          ];
+            ];
 
     const icons = genderSvg.selectAll("image").data(iconsData);
     icons.exit().remove();
 
-    icons.enter().append("image")
-      .attr("width",40).attr("height",40)
-      .merge(icons)
-      .attr("href", d=>"icons/"+d+".png")
-      .attr("x", (_,i)=> margin.left + i*(40+8))
-      .attr("y", (60-40)/2);
-  }
+    var iconSize = 80
 
-  function handleScroll(){
+    icons.enter().append("image")
+        .attr("width",iconSize)
+        .attr("height",iconSize)
+        .merge(icons)
+        .attr("href", d=>"icons/"+d+".png")
+        .attr("x", function(d, i){
+            return W/2 + (i%5)*(iconSize+8) - 2*(iconSize+8);
+        })
+        .attr("y", function(d,i){
+            return ((Math.floor(i/5)+1)*H)/3;
+        });
+}
+
+function handleScroll(){
     console.log("[handleScroll]");
     scroller    
         .setup({
