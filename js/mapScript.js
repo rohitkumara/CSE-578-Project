@@ -32,8 +32,8 @@ const svg     = d3.select("#mapChart"),
 //     .translate([width / 2, height / 2]);
 
 const projection = d3.geoMercator()
-    .scale(width / 1.8 / Math.PI)
-    .translate([width / 2, height / 2 + 70]);
+    .scale((width-150) / 1.8 / Math.PI)
+    .translate([width / 2, height / 2 + 80]);
 
 const path = d3.geoPath().projection(projection);
 
