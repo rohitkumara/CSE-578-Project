@@ -59,7 +59,7 @@ function drawHistogram(){
         .thresholds(x.ticks(20));
 
     bins = histogram(data);
-    console.log(bins);
+    // console.log(bins);
 
     y = d3.scaleLinear()
         .domain([0, d3.max(bins, function(d) { 
@@ -84,20 +84,6 @@ function drawHistogram(){
         .attr("text-anchor", "middle")  
         .style("font-size", "16px") 
         .text("# of billionaires");
-    
-    svg.selectAll(".bar")
-        .append("rect")
-        .attr("class", "bar")
-        .attr("transform", function(d) { 
-            return "translate(" + (margin.left + x(d.x0)) + "," + (margin.top + y(sumTotal(d))) + ")"; 
-        })
-        .attr("width", x(bins[0].x1) - x(bins[0].x0) - 4)
-        .attr("height", function(d) {
-            return innerHeight - y(sumTotal(d)); 
-        })
-        .attr("fill", color(0))
-        .attr("stroke", "black")
-        .attr("opacity", 1);
 
 }
 
@@ -117,7 +103,7 @@ function updateHistogram(step){
     else{
         bars = 17;
     }
-    console.log("[updateHistogram] step: " + step + ", bars: " + bars, bins.length);
+    // console.log("[updateHistogram] step: " + step + ", bars: " + bars, bins.length);
     
     // 830 × 467
     const coinSize = 467 / 20;
@@ -142,7 +128,7 @@ function updateHistogram(step){
                 g.each(function(d){
                     var noOfCoins = Math.ceil((sumTotal(d))/pplPerCoin);
                     // console.log(d, noOfCoins);
-                    var coins = g.selectAll(".coin")
+                    var coins = d3.select(this).selectAll(".coin")
                         .data(d3.range(noOfCoins), function(d, i){
                             // console.log("range", i, noOfCoins)
                             return i;
@@ -167,7 +153,31 @@ function updateHistogram(step){
                         })
                 })
             },
-            update => update,
+            function(update){
+                update.attr("opacity", function(d, i){
+                    if(step == 19){
+                        if(i == 8){
+                            return 1;
+                        }
+                        return 0.5;
+                    }
+                    else if(step == 20){
+                        if(i == 0){
+                            return 1;
+                        }
+                        return 0.5;
+                    }
+                    else if(step == 21){
+                        if(i == 16){
+                            return 1;
+                        }
+                        return 0.5;
+                    }
+                    else{
+                        return 1;
+                    }
+                })
+            },
             function(exit){
                 exit.each(function(d){
                     var b = d3.select(this);
@@ -201,7 +211,6 @@ function sumTotal(d){
     return sum;
 }
 
-// Need to FIX THIS
 function highlightHistogram(step){
     const svg = d3.select("#histogram_svg");
     const width = svg.style("width").replace("px", "");
@@ -210,27 +219,6 @@ function highlightHistogram(step){
     const margin = {top: 20, right: 30, bottom: 45, left: 55};
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom; 
-    var bar = svg.selectAll(".bar")
-        .data(bins)
-        .join(
-            enter => enter,
-            update => update
-            .transition().duration(500)
-            .attr("fill", function(d, i) {
-                if(step == 19 && i == 8){
-                    return color(1);
-                }
-                else if(step == 19 && i == 0){
-                    return color(1);
-                }
-                else if(step == 19 && i == 16){
-                    return color(1);
-                }
-                console.log("returning color to default", i)
-                return color(0);
-            }),
-            exit => exit,
-        )
 
     // highlight the 3 marks
     if(step == 19){
@@ -239,10 +227,10 @@ function highlightHistogram(step){
             .style("opacity", 1)
         highlight = d3.select("#left-highlight")
         highlight.transition().duration(500)
-            .style("opacity", 1)
+            .style("opacity", 0)
         highlight = d3.select("#right-highlight")
         highlight.transition().duration(500)
-            .style("opacity", 1)
+            .style("opacity", 0)
     }
     else if(step == 20){
         var highlight = d3.select("#middle-highlight")
@@ -290,21 +278,18 @@ function handleScroll(){
         })
         .onStepEnter(function(d){
             const step = d.index;
-            if(step <= 18){
-                updateHistogram(step);
-                var highlight = d3.select("#middle-highlight")
-                highlight.transition().duration(500)
-                    .style("opacity", 0)
-                highlight = d3.select("#left-highlight")
-                highlight.transition().duration(500)
-                    .style("opacity", 0)
-                highlight = d3.select("#right-highlight")
-                highlight.transition().duration(500)
-                    .style("opacity", 0)
-            }
-            else{
+            updateHistogram(step);
+            var highlight = d3.select("#middle-highlight")
+            highlight.transition().duration(500)
+                .style("opacity", 0)
+            highlight = d3.select("#left-highlight")
+            highlight.transition().duration(500)
+                .style("opacity", 0)
+            highlight = d3.select("#right-highlight")
+            highlight.transition().duration(500)
+                .style("opacity", 0)
+            if(step>=19){
                 highlightHistogram(step);
             }
-            
         })
 }

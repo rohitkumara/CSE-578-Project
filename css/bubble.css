@@ -1,27 +1,19 @@
-body {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    font-family: 'Comic Sans MS', cursive;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-}
-
-.main-viz{
+/* .bubble-main-viz{
     margin: 30px auto;
-    max-width: 100%;
-    max-height: 100%;
-    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
-}
+    max-width: 90%;
+    max-height: auto;
+} */
 
 .bubble-chart{
-    margin-top: 0;
-    border: solid 2px black;
-    border-radius: 10px; 
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    margin: auto;
     display: block;
-    box-shadow: 0 3px 8px rgba(74, 144, 226, 0.3);
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
+    background-color: rgb(255, 255, 255, 0);
+    border: none;
 }
 
 .bubble-group circle {
@@ -30,7 +22,7 @@ body {
 
 .bubble-group:hover {
     filter: brightness(1.3);
-    transition: filter 0.6s;
+    transition: filter 0.3s;
 }
 
 .bubble-group:hover circle {
@@ -53,8 +45,8 @@ body {
     }
 }
 
-.bubbletooltip {
-    position: absolute;
+#bubbletooltip {
+    position: fixed;
     background-color: #fff;
     padding: 10px 12px;
     border: 1px solid #ccc;
@@ -72,11 +64,21 @@ body {
     border-left: 4px solid #4a90e2;
     border-right: 4px solid #4a90e2;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    z-index: 9999;
 }
 
 .bubble-group text {
     fill: white;
     font-weight: bold;
     text-shadow: 1px 1px 2px black;
+}
+
+.bubblestep {
+    margin: 0 1 20vh 1;
+    height: 10vh;
+    width: 100%;
+    padding: 20px;
+    z-index: -1;
 }
 

@@ -6,15 +6,6 @@
     text-align: center;
 }
 
-body {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    font-family: 'Comic Sans MS', cursive;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-}
-
 .header{
     margin: 0 100px 0 100px;
 }
@@ -27,7 +18,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    height: 375px;
+    height: auto;
     overflow: hidden;
     position: relative;
 }

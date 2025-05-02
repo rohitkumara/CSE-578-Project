@@ -30,7 +30,7 @@
   .neumorphic-toggle.playing .icon.play  { display: none; }
   .neumorphic-toggle.playing .icon.pause { display: block; }
 
-  body { font-family: Arial, sans-serif; position: relative; }
+  /* body { font-family: Arial, sans-serif; position: relative; } */
   svg { display: block; margin: auto; }
   .bar { cursor: pointer; }
   .bar:hover { opacity: 1; stroke: #000; stroke-width: 2px; }

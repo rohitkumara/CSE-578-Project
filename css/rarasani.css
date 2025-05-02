@@ -1,15 +1,10 @@
 
-body {
-    background-color: #ffffff;
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-}
 
 .scroll-steps-container {
     position: relative;
     margin-top: -45vh;
     padding-bottom: 50vh;
+    pointer-events: none;
 }
 
 .svg-container {
@@ -20,26 +15,28 @@ body {
     overflow: hidden;
 }
 
-svg {
-    width: 60%;
-    height: 60%;
-    background-color: rgb(255, 255, 255);
-}
-
 #bloom_svg {
     position: absolute;
-    top: 20%;
-    left: 20%;
+    top: 10%;
+    left: 10%;
     margin: auto;
     display: block;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
 }
 
 #histogram_svg {
     position: absolute;
-    top: 20%;
-    left: 20%;
+    top: 10%;
+    left: 10%;
     margin: auto;
     display: block;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
 }
 
 .bloomstep {

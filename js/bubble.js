@@ -7,22 +7,39 @@ let colorScale;
 let scrollProgress;
 const oldPositions = {};
 
+const steps = 23;
 
+const scroller = scrollama();
 
-d3.csv("dataset/Billionaire_Industry.csv").then(data => {
-    globalData = data;
-    const selectedYearData = processDataForYear(data, currentYear);
+function step_injector(){
+    for(var i=0; i<=steps; i++){
+        const step = document.createElement("div");
+        step.className = "bubblestep";
+        step.dataset.step = `step${i}`;
+        // step.textContent = `Step ${i}`;
+        document.getElementById("bubble-steps-container").appendChild(step);
+    }
+    console.log("[step_injector] bubble steps injected");
+}
 
-    createYearSelector(data);
-    createColorScale(data);
-    
-    createIndustryBubbles(selectedYearData);
-    createLegend(selectedYearData);
-    
-    setTimeout(() => {
-        updateBubblesWithProgress(0);
+document.addEventListener('DOMContentLoaded', () => {
+    d3.csv("dataset/Billionaire_Industry.csv").then(data => {
+        step_injector();
+
+        globalData = data;
+        const selectedYearData = processDataForYear(data, currentYear);
+
+        createYearSelector(data);
+        createColorScale(data);
+        
+        createIndustryBubbles(selectedYearData);
+        createLegend(selectedYearData);
+       
+        const newYearData = processDataForYear(globalData, "2001");    
+        updateChartWithTransition([], newYearData);
+
         handleScroll();
-    }, 100);
+    });
 });
 
 function createColorScale(data) {
@@ -124,91 +141,26 @@ function processDataForYear(data, year) {
     }).filter(d => d.count > 0);
 }
 
-function handleScroll() {
-    const bubbleChart = document.getElementById("bubble-chart");
-    if (!bubbleChart) return;
-    
-    const rect = bubbleChart.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    if (rect.top < windowHeight && rect.bottom > 0) {
-        chartVisible = true;
-    }
-    
-    if (chartVisible) {        
-        if (rect.top <= 0 && rect.bottom >= windowHeight) {
-            scrollProgress = 1;
-        } else if (rect.top < 0) {
-            scrollProgress = Math.min(1, rect.bottom / (windowHeight * 0.75));
-        } else {
-            scrollProgress = Math.min(1, (windowHeight - rect.top) / (windowHeight * 0.75));
-        }
-        
-        scrollProgress = Math.pow(scrollProgress, 0.7);
-
-        updateBubblesWithProgress(scrollProgress);
-    }
-}
-
-function updateBubblesWithProgress(progress) {
-    if (!bubbleGroups) return;
-    
-    bubbleGroups.attr("transform", d => {
-        const startX = d.startX;
-        const startY = d.startY;
-        
-        const currentX = startX + (d.finalX - startX) * progress;
-        const currentY = startY + (d.finalY - startY) * progress;
-        
-        return `translate(${currentX},${currentY})`;
-    });
-    
-    bubbleGroups.selectAll("circle.main-bubble")
-        .attr("r", d => {
-            const minRadius = 10;
-            return minRadius + (d.finalRadius - minRadius) * progress;
-        });
-    
-    bubbleGroups.selectAll("circle.highlight")
-        .attr("r", d => {
-            const minRadius = 3;
-            const finalHighlightRadius = d.finalRadius * 0.3;
-            return minRadius + (finalHighlightRadius - minRadius) * progress;
+function handleScroll(){
+    console.log("[handleScroll]");
+    scroller    
+        .setup({
+            step: '.bubblestep',
+            offset: 0.5,
+            debug: false
         })
-        .attr("cx", d => {
-            const minOffset = -3;
-            const finalOffset = -d.finalRadius * 0.3;
-            return minOffset + (finalOffset - minOffset) * progress;
-        })
-        .attr("cy", d => {
-            const minOffset = -3;
-            const finalOffset = -d.finalRadius * 0.3;
-            return minOffset + (finalOffset - minOffset) * progress;
-        });
-    
-    bubbleGroups.selectAll("text.industry-name")
-        .attr("font-size", d => {
-            const minFontSize = 0;
-            const maxFontSize = Math.min(d.finalRadius / 3, 18);
-            return minFontSize + (maxFontSize - minFontSize) * progress;
-        })
-        .attr("opacity", progress > 0.3 ? (progress - 0.3) * 1.4 : 0);
-    
-    bubbleGroups.selectAll("text.industry-count")
-        .attr("font-size", d => {
-            const minFontSize = 0;
-            const maxFontSize = Math.min(d.finalRadius / 4, 14);
-            return minFontSize + (maxFontSize - minFontSize) * progress;
-        })
-        .attr("opacity", progress > 0.5 ? (progress - 0.5) * 2 : 0);
-        
-    bubbleGroups.selectAll("text.richest-person")
-        .attr("font-size", d => {
-            const minFontSize = 0;
-            const maxFontSize = Math.min(d.finalRadius / 5, 12);
-            return minFontSize + (maxFontSize - minFontSize) * progress;
-        })
-        .attr("opacity", progress > 0.7 ? (progress - 0.7) * 3 : 0);
+        .onStepEnter(function(d){
+            const step = d.index;
+            const oldYear = currentYear;
+            currentYear = 2001 + step + "";
+            
+            const oldYearData = processDataForYear(globalData, oldYear);
+            const newYearData = processDataForYear(globalData, currentYear);
+            
+            updateChartWithTransition(oldYearData, newYearData);
+            
+            d3.select("#chart-title").text(`Industry With Most Billionaires In ${currentYear}`);
+            })
 }
 
 function updateChartWithTransition(oldData, newData) {
@@ -234,11 +186,9 @@ function updateChartWithTransition(oldData, newData) {
         node.data.finalRadius = node.r;
     });
 
-    let tooltip = d3.select("#bubbletooltip");
-    if (tooltip.empty()) {
-        tooltip = d3.select("body").append("div")
-        .attr("id", "tooltip")
-        .style("position", "absolute")
+    let tooltip = d3.select("#bubbletooltip")
+        .attr("id", "bubbletooltip")
+        .style("position", "fixed")
         .style("padding", "10px")
         .style("background", "rgba(0, 0, 0, 0.8)")
         .style("border-radius", "4px")
@@ -247,7 +197,6 @@ function updateChartWithTransition(oldData, newData) {
         .style("pointer-events", "none")
         .style("opacity", 0)
         .style("z-index", 9999);
-    }
 
     if (bubbleGroups) {
         bubbleGroups.each(function(d) {
@@ -317,40 +266,43 @@ function updateChartWithTransition(oldData, newData) {
 
     
     bubbleGroups.transition()
-        .duration(1000)
+        .duration(350)
         .attr("transform", d => `translate(${d.finalX},${d.finalY})`);
     
     bubbleGroups.select("circle.main-bubble")
         .transition()
-        .duration(1000)
+        .duration(350)
         .attr("r", d => d.finalRadius);
     
     bubbleGroups.select("circle.highlight")
         .transition()
-        .duration(1000)
+        .duration(350)
         .attr("r", d => d.finalRadius * 0.3)
         .attr("cx", d => -d.finalRadius * 0.3)
         .attr("cy", d => -d.finalRadius * 0.3);
     
     bubbleGroups.select("text.industry-name")
         .transition()
-        .duration(1000)
+        .duration(350)
         .attr("font-size", d => Math.min(d.finalRadius / 3, 18))
         .attr("opacity", 1);
     
     bubbleGroups.select("text.industry-count")
         .transition()
-        .duration(1000)
+        .duration(350)
         .attr("font-size", d => Math.min(d.finalRadius / 4, 14))
         .attr("opacity", 1);
     
     bubbleGroups.select("text.richest-person")
         .transition()
-        .duration(1000)
+        .duration(350)
         .attr("font-size", d => Math.min(d.finalRadius / 5, 12))
         .attr("opacity", 0.8);
-
+    
+    console.log(bubbleGroups)
     bubbleGroups.on("mouseenter", function(event, d) {
+        console.log("mouse enter bubble")
+        console.log(d3.select(this).select("circle.main-bubble"))
         d3.select(this).select("circle.main-bubble")
             .transition().duration(200)
             .attr("opacity", 1);
@@ -361,19 +313,20 @@ function updateChartWithTransition(oldData, newData) {
                 Number of Billionaires: ${d.data.count}<br>
                 Richest Person: ${d.data.richest}
             `)
-            .style("left", (event.pageX + 15) + "px")
-            .style("top", (event.pageY - 30) + "px");
+            .style("left", (event.clientX + 15) + "px")
+            .style("top", (event.clientY - 30) + "px");
     })
     .on("mousemove", function(event) {
-        tooltip.style("left", (event.pageX + 15) + "px")
-            .style("top", (event.pageY - 30) + "px");
+        console.log("mouse movement bubble")
+        tooltip.style("left", (event.clientX + 15) + "px")
+            .style("top", (event.clientY - 30) + "px");
     })
     .on("mouseleave", function() {
         d3.select(this).select("circle.main-bubble")
             .transition().duration(200)
             .attr("opacity", 0.8);
             
-        tooltip.transition().duration(200)
+        tooltip
             .style("opacity", 0);
     });   
     
@@ -393,10 +346,11 @@ function createIndustryBubbles(data) {
     
     svg.selectAll("*").remove();
     
-    let tooltip = d3.select("#bubbletooltip");
+    let tooltip = d3.select("#tooltip");
+    console.log(tooltip)
     if (tooltip.empty()) {
         tooltip = d3.select("body").append("div")
-            .attr("id", "bubbletooltip")
+            .attr("id", "tooltip")
             .style("position", "absolute")
             .style("padding", "10px")
             .style("background", "rgba(0, 0, 0, 0.8)")
@@ -429,7 +383,7 @@ function createIndustryBubbles(data) {
         .attr("dx", 2)
         .attr("dy", 2)
         .attr("stdDeviation", 3)
-        .attr("flood-color", "rgba(0,0,0,0.3)");
+        .attr("flood-color", "rgba(0, 0, 0, 0.3)");
 
     const pack = d3.pack()
         .size([width, height - 100])

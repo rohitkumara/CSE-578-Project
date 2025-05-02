@@ -11,6 +11,7 @@
 
         <!-- css files -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/body.css">
         <link rel="stylesheet" href="css/rarasani.css">
         <link rel="stylesheet" href="css/t.css">
         <link rel="stylesheet" href="css/bubble.css">
@@ -18,13 +19,13 @@
         <link rel="stylesheet" href="css/glyph.css">
         <link rel="stylesheet" href="css/sankey.css">
         <style>
-            body {
+            /* body {
               font-family: sans-serif;
               background-color: #fefefe;
               margin: 0;
               padding: 0;
               text-align: center;
-            }
+            } */
         
             h2 {
               margin: 25px 0 10px 0;
@@ -67,7 +68,7 @@
         <h1 class="text-center">How to be a Billionaire?</h1>
         <h3 class="text-center">Authors</h3>
 
-        <!-- PROFILE CARD -->
+        <!-- PROFILE CARD CHART -->
         <div class="header">
           <header>
               <h1 class="text-center">Top Billionaires Profile Cards</h1>
@@ -129,6 +130,7 @@
             </div>
         </div>
 
+        <!-- RACING BAR CHART -->
         <!-- Main race chart -->
         <svg id="chart-svg" width="1000" height="600"></svg>
 
@@ -162,7 +164,7 @@
             </span>
         </div>
 
-        <!-- CHOROPLETH MAP -->
+        <!-- CHOROPLETH MAP CHART -->
         <h2>Global Billionaire Wealth by Country (<span id="yearLabel">2024</span>)</h2>
 
         <div>
@@ -178,7 +180,7 @@
         <svg id="mapChart" width="1200" height="600"></svg>
         <div id="tooltip" class="tooltip"></div>
 
-        <!-- HISTOGRAM -->
+        <!-- HISTOGRAM CHART -->
         <div class="svg-scroll-container" id="histogram-scroll-container">
             <div class="svg-container" id="histogram-container">
                 <p style="font-size: 40px; margin-left: 40px; margin-top: 20px">6. Age at which Billionaires made their first billion</p>
@@ -192,7 +194,7 @@
             </div>
         </div>
 
-        <!-- GLYPH -->
+        <!-- GLYPH CHART -->
         <h1>Who Wants to Become a Billionaire?</h1>
         <p>Click a glyph to reveal their educational journey!</p>
 
@@ -220,7 +222,7 @@
         <p><strong>Education Status:</strong> <span id="popup-status"></span></p>
         </div>
 
-        <!-- SANKEY -->
+        <!-- SANKEY CHART -->
         <h2>Who Wants to Become a Billionaire? - Progressive Inheritance Sankey (Full Path Memory)</h2>
         <div class="controls">
             <button id="toggle-btn">Switch to Net Worth Mode</button>
@@ -231,20 +233,22 @@
 
 
         <!-- BUBBLE CHART -->
-        <div id="bubbletooltip" class="bubbletooltip" style="opacity: 0"></div>
+        <div id="bubbletooltip"></div>
 
-        <div class="main-viz" id="main-viz">
-            <div class="container">            
+        <div class="svg-scroll-container" id="bubble-main-viz">
+            <div class="svg-container">            
                 <svg class="bubble-chart" id="bubble-chart"></svg>
             </div>
+            <div class="scroll-steps-container" id="bubble-steps-container"></div>
         </div>
+        
 
         <!-- BLOOM CHART -->
         <div class="svg-scroll-container" id="bloom-scroll-container">
             <div class="svg-container" id="bloom-container">
                 <p style="font-size: 40px; margin-left: 40px; margin-top: 20px">5. Country GDP's effects on billionaire's networth</p>
                 <svg id="bloom_svg"></svg>
-                <div id="bloom-left-highlight"><p>Each country's central circle grows with its GDP, 
+                <div id="bloom-left-highlight" style="background-color: rgb(0,0,0,0);"><p>Each country's central circle grows with its GDP, 
                     while the number of dollar bills blooming around it shows the total net worth of billionaires in that country.</p><p> This visualization highlights the top 20 countries 
                     by total net worth of billionaires (1 Petal ≈ $10 Billion).</p></div>
             </div>
@@ -253,7 +257,7 @@
             </div>
         </div>
 
-        <!-- Industry dropdown + gender‐icon row -->
+        <!-- Industry dropdown + gender‐icon row CHART -->
         <div id="gender-distribution" style="text-align:center; margin:20px;">
             <label for="industry-select">Industry:</label>
             <select id="industry-select"></select>
@@ -262,7 +266,6 @@
 
         <!-- CLUSTER CHART -->
         <h2>Top 5 Billionaires' Net Wealth</h2>
-
         <div>
           Year:
           <input type="range" id="clusterYearSlider" min="1997" max="2024" value="2024" style="width:150px;">
