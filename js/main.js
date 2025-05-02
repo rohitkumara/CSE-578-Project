@@ -94,23 +94,20 @@ const industryMap = {
 const chartSvg  = d3.select("#chart-svg"),
       genderSvg = d3.select("#gender-chart-svg");
 
-const margin = { top:50, right:30, bottom:110, left:260 },
-      W      = +chartSvg.attr("width"),
-      H      = +chartSvg.attr("height"),
-      width  = W - margin.left - margin.right,
-      height = H - margin.top  - margin.bottom;
+const margin     = { top:50, right:180, bottom:190, left:260 },
+      W          = +chartSvg.attr("width"),
+      H          = +chartSvg.attr("height"),
+      baseHeight = H,
+      width      = W - margin.left - margin.right,
+      height     = H - margin.top - margin.bottom;
 
-// the main g for all bars + labels
-const chart = chartSvg.append("g")
+const chart         = chartSvg.append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
-
-const x = d3.scaleLinear().range([0,width]);
-const y = d3.scaleBand().range([0,height]).padding(0.1);
-
-const xAxisTop  = chart.append("g").attr("class","axis x-axis");
-const yAxisLeft = chart.append("g").attr("class","axis y-axis");
-
-const timelineScale = d3.scaleTime().range([0,width]);
+const x             = d3.scaleLinear().range([0, width]);
+const y             = d3.scaleBand().range([0, height]).padding(0.1);
+const xAxisTop      = chart.append("g").attr("class","axis x-axis");
+const yAxisLeft     = chart.append("g").attr("class","axis y-axis");
+const timelineScale = d3.scaleTime().range([0, width]);
 
 // base positions for timeline & year
 const baseTimelineY = margin.top + height + 30;
@@ -142,7 +139,6 @@ function toggleInlineDetail(datum, containerG, history) {
     chart.selectAll(".inline-detail").remove();
     openIndex = null;
   } else {
-    // otherwise clear any old, then open new
     chart.selectAll(".inline-detail").remove();
     openIndex = clickedIndex;
 
@@ -190,50 +186,25 @@ function toggleInlineDetail(datum, containerG, history) {
       const idx   = y.domain().indexOf(d.label),
             baseY = y(d.label),
             extra = (openIndex!==null && idx > openIndex) ? detailHeight : 0;
-      // +20 is just a small extra bottom‐padding
       return `translate(0,${baseY + extra + 20})`;
     });
 
   // bump SVG height too
   const shift = openIndex===null ? 0 : detailHeight;
   chartSvg.transition().duration(300)
-    .attr("height", H + shift + 10);
+    .attr("height", baseHeight + shift + 10);
 
-  // and move timeline + playhead + yearLabel by the same shift
+  // move timeline + playhead + yearLabel by the same shift
   timelineAxisG.transition().duration(300)
     .attr("transform", `translate(${margin.left},${baseTimelineY + shift})`);
 
   const px = margin.left + timelineScale(currentDate);
   playhead.transition().duration(300)
-    .attr("transform", `translate(${px},${baseTimelineY + shift+100})`);
-
+    .attr("transform", `translate(${px},${baseTimelineY + shift + 100})`);
   yearLabel.transition().duration(300)
     .attr("y", baseYearY + shift);
-
-    const playBtn = d3.select("#play-pause");
-    let timer = null,
-        idx   = 0;
-    
-    // these two helpers encapsulate starting/stopping the race
-    function startRace(dates, years, byYear) {
-      playBtn.classed("playing", true);
-      timer = d3.interval(() => {
-        idx = (idx + 1) % dates.length;
-        updateRace(dates[idx], byYear.get(years[idx]));
-      }, 2000);
-    }
-    
-    function stopRace() {
-      playBtn.classed("playing", false);
-      if (timer) timer.stop(), timer = null;
-    }
-    
-    // wire up your neumorphic button
-    playBtn.on("click", () => {
-      if (timer) stopRace();
-      else   startRace(allDates, allYears, dataByYear);
-    });
 }
+
 
 // Load data & fire everything up
 d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
@@ -268,32 +239,6 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
       .tickFormat(d3.timeFormat("%Y"))
   ).selectAll("text").style("text-anchor","middle");
 
-  // play/pause
-  const playBtn = d3.select("#play");
-  let timer = null,
-      idx   = 0;
-
-  // start the auto‐play
-  function startRace() {
-    playBtn.classed("playing", true);
-    timer = d3.interval(() => {
-      idx = (idx + 1) % dates.length;
-      updateRace(dates[idx], byYear.get(years[idx]));
-    }, 2000);
-  }
-
-  // stop the auto‐play
-  function stopRace() {
-    playBtn.classed("playing", false);
-    if (timer) timer.stop(), timer = null;
-  }
-
-  // toggle on click
-  playBtn.on("click", () => {
-    if (timer) stopRace();
-    else       startRace();
-  });
-
   // industry dropdown + gender row
   const categories = Array.from(new Set(raw.map(d=>d.industry))).sort();
   d3.select("#industry-select")
@@ -303,19 +248,41 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
 
   d3.select("#industry-select").on("change", function(){
     updateGenderIcons(this.value);
-    updateRace(dates[idx], byYear.get(years[idx]));
+    // snap back to whatever year we're currently scrolled to:
+    const year = currentDate.getFullYear();
+    updateRace(new Date(year,0,1), byYear.get(year));
   });
 
-  // first draw
+  // keep a pixel‐offset along our timeline
+  let scrollOffset = 0;
+
+  // INITIAL DRAW
   updateRace(dates[0], byYear.get(years[0]));
   updateGenderIcons(categories[0]);
+
+  // WIRE UP SCROLL‐TO‐SCRUB
+  const svgNode = chartSvg.node();
+  const scrollSensitivity = 0.1;  
+  svgNode.addEventListener("wheel", e => {
+    e.preventDefault();
+    // accumulate horizontal scroll (fallback to vertical if no horizontal wheel)
+    const raw = (e.deltaX !== 0 ? e.deltaX : e.deltaY);
+    scrollOffset += raw * scrollSensitivity;
+    scrollOffset = Math.max(0, Math.min(scrollOffset, width));
+
+    // invert to Date, snap to full‐year, update
+    const dt   = timelineScale.invert(scrollOffset),
+          yr   = dt.getFullYear(),
+          date = new Date(yr,0,1);
+
+    updateRace(date, byYear.get(yr));
+  });
 
   // ───────────────────────────────────────────────────────────────
   function updateRace(date, dataForYear) {
     // close any open detail
     chart.selectAll(".inline-detail").remove();
     openIndex = null;
-
     currentDate = date;
 
     const top10 = Array.from(dataForYear)
@@ -329,7 +296,6 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
     xAxisTop.transition().duration(600)
       .call(d3.axisTop(x).ticks(5).tickFormat(d=>" "+d+" B"));
 
-    // blank‐out y‐axis ticks
     yAxisLeft.transition().duration(600)
       .call(d3.axisLeft(y)
         .tickSize(0)
@@ -347,15 +313,13 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
       .attr("class","bar-group")
       .attr("transform", d=>`translate(0,${y(d.label)})`);
 
-    // name label (NEW)
     ge.append("text")
       .attr("class","name-label")
-      .attr("x", -10)
-      .attr("y", y.bandwidth()/2 + 5)
+      .attr("x",-10)
+      .attr("y",y.bandwidth()/2+5)
       .attr("text-anchor","end")
       .text(d=>d.label);
 
-    // bar
     ge.append("rect")
       .attr("class","bar")
       .attr("y",0)
@@ -363,20 +327,16 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
       .attr("width", 0)
       .on("mouseover", function(){ d3.select(this).attr("opacity",0.7); })
       .on("mouseout",  function(){ d3.select(this).attr("opacity",1); })
-      .on("click", function(ev,d){
-        toggleInlineDetail(d,
-          d3.select(this.parentNode),
-          dataByName.get(d.full_name)
-        );
-      });
+      .on("click", (ev,d) => toggleInlineDetail(
+        d,
+        d3.select(ev.currentTarget.parentNode),
+        dataByName.get(d.full_name)
+      ));
 
-    // flag + value
     ge.append("text").attr("class","flag");
     ge.append("text").attr("class","value-label").attr("text-anchor","end");
 
-    // ENTER + UPDATE merge
     const allG = ge.merge(groups);
-
     allG.transition().duration(600)
       .attr("transform", d=>`translate(0,${y(d.label)})`);
 
@@ -386,15 +346,15 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
 
     allG.select("text.flag").transition().duration(600)
       .attr("x", d=>x(d.net)+6)
-      .attr("y", y.bandwidth()/2 + 10)
+      .attr("y", y.bandwidth()/2+10)
       .text(d=>flagEmoji[d.country_of_citizenship]||"");
 
     allG.select("text.value-label").transition().duration(600)
       .attr("x", d=>x(d.net)-6)
-      .attr("y", y.bandwidth()/2 + 5)
-      .text(d=>d.net + " B");
+      .attr("y", y.bandwidth()/2+5)
+      .text(d=>d.net+" B");
 
-    // reset timeline + playhead + yearLabel
+    // move playhead, yearLabel & bottom axis back to base position
     const px = margin.left + timelineScale(date);
     playhead.transition().duration(600)
       .attr("transform", `translate(${px},${baseTimelineY})`);
@@ -402,10 +362,12 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
       .attr("x", px)
       .attr("y", baseYearY)
       .text(d3.timeFormat("%Y")(date));
+    timelineAxisG.transition().duration(600)
+      .attr("transform", `translate(${margin.left},${baseTimelineY})`);
 
     // restore SVG height
     chartSvg.transition().duration(600)
-      .attr("height", H);
+      .attr("height", baseHeight);
   }
 
   // ───────────────────────────────────────────────────────────────
