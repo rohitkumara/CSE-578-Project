@@ -44,12 +44,12 @@
 
 #mapChart {
     position: absolute;
-    top: 10%;
-    left: 10%;
+    top: 20%;
+    left: 20%;
     margin: auto;
     display: block;
-    width: 80%;
-    height: 80%;
+    width: 60%;
+    height: 60%;
     background-color: rgba(255, 255, 255, 0);
     border: none;
 }

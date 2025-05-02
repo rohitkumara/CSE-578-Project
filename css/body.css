@@ -1,12 +1,13 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url('../imgs/background.png'); /* Replace with your image path */
-    background-size: cover;                         /* Scale image to cover entire page */
-    background-position: center;                    /* Center the image */
+    background-image: url('../imgs/background.png'); 
+    /* background: rgb(255, 255, 255);  */
+    background-size: cover;                         
+    background-position: center;                    
     height: 100vh;   
     width: 100%;
-    overflow-x: hidden;                               /* Ensure full viewport height */
+    overflow-x: hidden;                               
   }
 
   svg {
@@ -14,4 +15,14 @@ body {
     stroke: none;
     filter: none;
     box-shadow: 0;
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    margin: auto;
+    display: block;
+    width: 60%;
+    height: 60%;
+    background-color: rgb(255, 255, 255, 0);
   }
+
+  

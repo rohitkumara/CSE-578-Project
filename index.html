@@ -31,64 +31,73 @@
         <h3 class="text-center">Authors</h3>
 
         <!-- PROFILE CARD CHART -->
-        <div class="header">
-          <header>
-              <h1 class="text-center">Top Billionaires Profile Cards</h1>
-          </header>
-        </div>
-    
-        <div class="main-viz" id="main-viz">
-            <div class="container">
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/Elon.jpg">
+        <div class="svg-scroll-container" id="cards-scroll-container">
+            <div class="svg-container" id="cards-container">
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Top Billionaires Profile Cards</h1>
+                    </header>
+                  </div>
+                <div class="main-viz" id="main-viz">
+                    <div class="container">
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/Elon.jpg">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/Bernard.jpg">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/Giovanni.webp">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/Amancio.jpeg">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/Dieter.jpg">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/David.webp">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/Carlos.jpeg">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/Mukesh.webp">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/Vladimir.jpeg">
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="image" onclick="showCard()">
+                                <img src="./imgs/top10_billionaires_images/Zhong.webp">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/Bernard.jpg">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/Giovanni.webp">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/Amancio.jpeg">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/Dieter.jpg">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/David.webp">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/Carlos.jpeg">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/Mukesh.webp">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/Vladimir.jpeg">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image" onclick="showCard()">
-                        <img src="./imgs/top10_billionaires_images/Zhong.webp">
-                    </div>
-                </div>
+            </div>
+            <div class="scroll-steps-container" id="cards-steps-container">
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
             </div>
         </div>
 
@@ -96,6 +105,11 @@
         <!-- Main race chart -->
         <div class="svg-scroll-container" id="racebar-scroll-container">
             <div class="svg-container" id="racebar-container">
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Race Chart</h1>
+                    </header>
+                </div>
                 <svg id="chart-svg"></svg>
                 <!-- Region legend -->
                 <div id="legend" style="position: absolute; top: 80vh; left: 65vh;">
@@ -123,7 +137,11 @@
         <div id="maptooltip" class="maptooltip"></div>
         <div class="svg-scroll-container" id="mapchart-scroll-container">
             <div class="svg-container" id="mapchart-container">
-                <p style="text-align: centre; font-size: 40px; margin-left: 40px; margin-top: 20px">Global Billionaire Wealth by Country</p>
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Global Billionaire Wealth by Country</h1>
+                    </header>
+                </div>
                 <svg id="mapChart"></svg></div>
             <div class="scroll-steps-container" id="mapchart-steps-container">
                 <!-- js injects x amount of steps here -->
@@ -133,7 +151,11 @@
         <!-- HISTOGRAM CHART -->
         <div class="svg-scroll-container" id="histogram-scroll-container">
             <div class="svg-container" id="histogram-container">
-                <p style="font-size: 40px; margin-left: 40px; margin-top: 20px">6. Age at which Billionaires made their first billion</p>
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Age at which Billionaires made their first billion</h1>
+                    </header>
+                </div>
                 <svg id="histogram_svg"></svg>
                 <div class="info_box" id="middle-highlight"><p>Most billionaires made their first billion at the age 55-60</p></div>
                 <div class="info_box" id="left-highlight"><p>Youngest are billionaires who made their money through inherited shares or company at 18/19</p></div>
@@ -173,20 +195,37 @@
         </div>
 
         <!-- SANKEY CHART -->
-        <h2>Who Wants to Become a Billionaire? - Progressive Inheritance Sankey (Full Path Memory)</h2>
-        <div class="controls">
-            <button id="toggle-btn">Switch to Net Worth Mode</button>
-            <button id="reset-btn">Reset Chart</button>
-        </div>
-        <svg id="sankey_svg" width="1100" height="800"></svg>
         <div class="sankey_tooltip" id="sankey_tooltip"></div>
-
+        <div class="svg-scroll-container" id="sankey-distribution">
+            <div class="svg-container" id="sankey-container">
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Progressive Inheritance Sankey (Full Path Memory)</h1>
+                    </header>
+                </div>
+                <div id="g-dist" class="controls"style="text-align:center; margin:20px;">
+                    <button id="toggle-btn">Switch to Net Worth Mode</button>
+                    <button id="reset-btn">Reset Chart</button>
+                </div>
+                <svg id="sankey_svg"></svg>
+            </div>
+            <div class="scroll-steps-container" id="sankey-steps-container">
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+            </div>
+        </div>
 
         <!-- BUBBLE CHART -->
         <div id="bubbletooltip"></div>
-
         <div class="svg-scroll-container" id="bubble-main-viz">
             <div class="svg-container">            
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Bubble Chart</h1>
+                    </header>
+                </div>
                 <svg class="bubble-chart" id="bubble-chart"></svg>
             </div>
             <div class="scroll-steps-container" id="bubble-steps-container"></div>
@@ -196,7 +235,11 @@
         <!-- BLOOM CHART -->
         <div class="svg-scroll-container" id="bloom-scroll-container">
             <div class="svg-container" id="bloom-container">
-                <p style="font-size: 40px; margin-left: 40px; margin-top: 20px">5. Country GDP's effects on billionaire's networth</p>
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Country GDP's effects on billionaire's networth</h1>
+                    </header>
+                </div>
                 <svg id="bloom_svg"></svg>
                 <div id="bloom-left-highlight" style="background-color: rgb(0,0,0,0);"><p>Each country's central circle grows with its GDP, 
                     while the number of dollar bills blooming around it shows the total net worth of billionaires in that country.</p><p> This visualization highlights the top 20 countries 
@@ -210,14 +253,20 @@
         <!-- Industry dropdown + gender‐icon row CHART -->
         <div class="svg-scroll-container" id="gender-distribution">
             <div class="svg-container" id="gender-container">
-                <p style="font-size: 40px; margin-left: 40px; margin-top: 20px">Gender ratio in various industries</p>
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Gender ratio in various industries</h1>
+                    </header>
+                </div>
                 <div id="g-dist" style="text-align:center; margin:20px;">
                     <label for="industry-select">Industry:</label>
                     <select id="industry-select"></select>
                 </div>
                 <svg id="gender-chart-svg" width="960" height="60"></svg>
             </div>
-            <div class="scroll-steps-container" id="bloom-steps-container">
+            <div class="scroll-steps-container" id="gender-steps-container">
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
+                <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
                 <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
                 <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
             </div>
@@ -227,16 +276,16 @@
         <div id="clusterTooltip" class="clusterTooltip"></div>
         <div class="svg-scroll-container" id="cluster-scroll-container">
             <div class="svg-container" id="cluster-container">
-                <h2>Top 5 Billionaires' Net Wealth</h2>
+                <div class="header">
+                    <header>
+                        <h1 class="text-center">Top 5 Billionaires' Net Wealth</h1>
+                    </header>
+                </div>
                 <svg id="dynamicClusterChart"></svg>
             </div>
             <div class="scroll-steps-container" id="cluster-steps-container">
             </div>
         </div>
-    
-        
-
-
         <!-- call all scripts -->
         <script type="module" src="js/mapscript.js"></script>
         <script type="module" src="js/clusterScript.js"></script>

@@ -1,4 +1,3 @@
-
 const svg = d3.select("#sankey_svg"), 
 width = svg.style("width").replace("px", ""), 
 height = svg.style("height").replace("px", "");
@@ -45,36 +44,82 @@ d3.csv("dataset/Synthetic_Inheritance_Billionaire_Dataset.csv").then(function(da
     const sankey = d3.sankey().nodeWidth(24).nodePadding(30).extent([[10, 10], [width - 10, height - 10]]);
     sankey(graph);
 
-    const link = svg.append("g").attr("fill", "none").attr("stroke-opacity", 0.4)
+    const link = svg.append("g")
+        .attr("fill", "none")
+        .attr("stroke-opacity", 0.4)
         .selectAll("path")
         .data(graph.links)
         .join("path")
+        .attr("class", "sankey-link")
         .attr("d", d3.sankeyLinkHorizontal())
         .attr("stroke", d => color(d.source.name))
         .attr("stroke-width", d => Math.max(1, d.width))
         .on("mouseover", (event, d) => {
-        tooltip.style("opacity", 1)
-            .html(`<strong>From:</strong> ${d.source.name}<br><strong>To:</strong> ${d.target.name}<br><strong>Value:</strong> ${d.value.toFixed(2)}<br><strong>Example Names:</strong> ${d.names.join(", ")}`)
-            .style("left", (event.pageX + 15) + "px")
-            .style("top", (event.pageY - 30) + "px");
+            d3.select(event.currentTarget)
+                .classed("sankey-link-highlight", true);
+            
+            node.filter(n => n === d.source || n === d.target)
+                .classed("sankey-node-highlight", true);
+                
+            tooltip.style("opacity", 1)
+                .html(`<strong>From:</strong> ${d.source.name}<br><strong>To:</strong> ${d.target.name}<br><strong>Value:</strong> ${d.value.toFixed(2)}<br><strong>Example Names:</strong> ${d.names.join(", ")}`)
+                .style("left", (event.clientX + 15) + "px")
+                .style("top", (event.clientY - 30) + "px");
         })
-        .on("mouseout", () => tooltip.style("opacity", 0));
+        .on("mousemove", (event, d) => {
+            tooltip
+                .style("left", (event.clientX + 15) + "px")
+                .style("top", (event.clientY - 30) + "px");
+        })
+        .on("mouseout", (event, d) => {
+            d3.select(event.currentTarget)
+                .classed("sankey-link-highlight", false);
+            
+            node.classed("sankey-node-highlight", false);
+            
+            tooltip.style("opacity", 0);
+        });
 
     const node = svg.append("g")
         .selectAll("rect")
         .data(graph.nodes)
         .join("rect")
+        .attr("class", "sankey-node")
         .attr("x", d => d.x0)
         .attr("y", d => d.y0)
         .attr("height", d => d.y1 - d.y0)
         .attr("width", d => d.x1 - d.x0)
         .attr("fill", d => color(d.name))
         .attr("rx", 6).attr("ry", 6)
+        .on("mouseover", (event, d) => {
+            d3.select(event.currentTarget)
+                .classed("sankey-node-highlight", true);
+            
+            link.filter(l => l.source === d || l.target === d)
+                .classed("sankey-link-highlight", true);
+                
+            tooltip.style("opacity", 1)
+                .html(`<strong>Node:</strong> ${d.name}<br><strong>Value:</strong> ${d.value.toFixed(2)}`)
+                .style("left", (event.clientX + 15) + "px")
+                .style("top", (event.clientY - 30) + "px");
+        })
+        .on("mousemove", (event, d) => {
+            tooltip
+                .style("left", (event.clientX + 15) + "px")
+                .style("top", (event.clientY - 30) + "px");
+        })
+        .on("mouseout", (event, d) => {
+            d3.select(event.currentTarget)
+                .classed("sankey-node-highlight", false);
+            link.classed("sankey-link-highlight", false);
+            
+            tooltip.style("opacity", 0);
+        })
         .on("click", (event, d) => {
-        if (selections.length === 0 && data.some(x => x.Wealth_Type === d.name)) selections.push(d.name);
-        else if (selections.length === 1 && data.some(x => x.Country === d.name)) selections.push(d.name);
-        else if (selections.length === 2 && data.some(x => x.Source_of_Wealth === d.name)) selections.push(d.name);
-        buildChart();
+            if (selections.length === 0 && data.some(x => x.Wealth_Type === d.name)) selections.push(d.name);
+            else if (selections.length === 1 && data.some(x => x.Country === d.name)) selections.push(d.name);
+            else if (selections.length === 2 && data.some(x => x.Source_of_Wealth === d.name)) selections.push(d.name);
+            buildChart();
         });
 
     svg.append("g")
@@ -90,16 +135,16 @@ d3.csv("dataset/Synthetic_Inheritance_Billionaire_Dataset.csv").then(function(da
     }
 
     function initialView() {
-    selections = [];
-    buildChart();
+        selections = [];
+        buildChart();
     }
 
     initialView();
 
     document.getElementById("toggle-btn").addEventListener("click", () => {
-    useNetWorth = !useNetWorth;
-    document.getElementById("toggle-btn").textContent = useNetWorth ? "Switch to Count Mode" : "Switch to Net Worth Mode";
-    buildChart();
+        useNetWorth = !useNetWorth;
+        document.getElementById("toggle-btn").textContent = useNetWorth ? "Switch to Count Mode" : "Switch to Net Worth Mode";
+        buildChart();
     });
 
     document.getElementById("reset-btn").addEventListener("click", initialView);
