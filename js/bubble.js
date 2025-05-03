@@ -104,7 +104,7 @@ function handleScroll(){
             
             updateChartWithTransition(oldYearData, newYearData);
             
-            d3.select("#chart-title").text(`Industry With Most Billionaires In ${currentYear}`);
+            d3.select("#chart-title").text(`${currentYear}`);
             })
 }
 
@@ -405,12 +405,14 @@ function createIndustryBubbles(data) {
 
     svg.append("text")
         .attr("id", "chart-title")
-        .attr("x", width / 2)
-        .attr("y", 30)
+        .attr("x", width/2)  
+        .attr("y", height)
         .attr("text-anchor", "middle")
-        .attr("font-size", "24px")
-        .attr("font-weight", "bold")
-        .text(`Industry With Most Billionaires In ${currentYear}`);
+        .style("font-size", "35px")
+        .style("font-weight", "bold")
+        .style("fill", "#555555")
+        .style("opacity", 0.9)
+        .text(currentYear);
 }
 
 function createLegend(data) {
@@ -422,13 +424,13 @@ function createLegend(data) {
   
     const legend = svg.append("g")
       .attr("class", "chart-legend")
-      .attr("transform", `translate(${width - 200}, 70)`);
+      .attr("transform", `translate(${width - 250}, 70)`);
     
     legend.append("text")
       .attr("class", "legend-title")
       .attr("x", 0)
       .attr("y", -30)
-      .attr("font-size", "16px")
+      .attr("font-size", "24px")
       .attr("font-weight", "bold")
       .text("Top Industries Legend")
     
@@ -449,6 +451,6 @@ function createLegend(data) {
     legendItems.append("text")
       .attr("x", 20)
       .attr("y", 4)
-      .attr("font-size", "12px")
+      .attr("font-size", "18px")
       .text(d => d.name);
 }

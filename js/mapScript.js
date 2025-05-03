@@ -33,7 +33,7 @@ const svg     = d3.select("#mapChart"),
 
 const projection = d3.geoMercator()
     .scale((width-150) / 1.8 / Math.PI)
-    .translate([width / 2, height / 2 + 80]);
+    .translate([width / 2, height / 2 + 60]);
 
 const path = d3.geoPath().projection(projection);
 
@@ -123,7 +123,7 @@ Promise.all([
   // 6) Year label
   svg.append("text")
     .attr("id","yearDisplay")
-    .attr("x", width/2).attr("y", height-10)
+    .attr("x", width/2).attr("y", height-20)
     .attr("text-anchor","middle")
     .style("font-size","32px")
     .style("font-weight","bold")
@@ -132,7 +132,7 @@ Promise.all([
     .text(currentYear);
 
   // 7) Legend
-  const shift=400, W=200, H=15;
+  const shift=250, W=200, H=15;
   const lg=defs.append("linearGradient").attr("id","legend-gradient")
     .attr("x1","0%").attr("y1","0%").attr("x2","100%").attr("y2","0%");
   lg.selectAll("stop").data(d3.range(0,1.1,0.1))
@@ -246,8 +246,8 @@ function updateIcons() {
     if (!e || e.count===0) return [];
     const count = e.count>=100 ? 2 : 1;
     return Array.from({length:count}, (_,i) => ({
-      x: f.x + (i*28 - 14),
-      y: f.y - 10,
+      x: f.x + (i*28 - 7),
+      y: f.y + 5,
       id: f.key + "-" + i
     }));
   });

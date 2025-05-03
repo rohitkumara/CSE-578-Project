@@ -11,6 +11,7 @@
 
         <!-- Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
+
         <!-- css files -->
         <link rel="stylesheet" href="css/body.css">
         <link rel="stylesheet" href="css/rarasani.css">
@@ -25,10 +26,10 @@
         <style>
             .hero {
                   padding-top: 0; 
-                  height: 100vh; /* fill viewport height */
+                  height: 100vh;
                   background:
-                    url('BG/BG1.png') no-repeat center/contain; /* show entire image */
-                  background-color: #f7e1b5; /* fill behind letter-boxes */
+                    url('BG/BG1.png') no-repeat center/contain;
+                  background-color: #f7e1b5;
                   background-size: cover; 
                 }
             .hero-divider {
@@ -48,10 +49,9 @@
         <div class="svg-scroll-container" id="first-page">
             <div class="svg-container" id="first-container">
                   <div id="front-page">
-                    <h1 class="main-title">Who Wants to Be a Billionaire?</h1>
+                    <!-- <h1 class="main-title">Who Wants to Be a Billionaire?</h1> -->
                     <div class="main-subtitle">
-                        <p>Have you ever wondered what it really takes to join the billionaire club? Is it Education? Inheritance? Geography? Grit?</p>
-                        <p>This interactive story unpacks the data behind extreme wealth through a child's lens—one question at a time.</p>
+                        <p>Have you ever wondered what it really takes to join the billionaire club? This interactive story unpacks the data behind extreme wealth through a child's lens — one question at a time.</p>
                     </div>
                   </div>
             </div>
@@ -62,8 +62,11 @@
             <div class="svg-container" id="cards-container">
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Top Billionaires Profile Cards</h1>
+                        <h1 class="text-center">Who is a billionaire?</h1>
                     </header>
+                    <div class="main-text">A billionaire is someone whose net worth is at least 1 billion dollars — that's 1,000 million! 💰
+                        It's like having so much money that if you spent $1,000 every day, it would take you almost 2,740 years to spend a billion!  😎 
+                    </div>
                   </div>
                 <div class="main-viz" id="main-viz">
                     <div class="container">
@@ -134,12 +137,12 @@
             <div class="svg-container" id="racebar-container">
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Race Chart</h1>
+                        <h1 class="text-center">Who are the richest people right now? Let's explore!</h1>
                     </header>
                 </div>
                 <svg id="chart-svg"></svg>
                 <!-- Region legend -->
-                <div id="legend" style="position: absolute; top: 80vh; left: 65vh;">
+                <div id="legend" style="position: absolute; top: 90vh; left: 65vh;">
                     <span class="legend-item">
                     <span class="legend-color" style="background:#f57c00"></span> North America
                     </span>
@@ -152,6 +155,13 @@
                     <span class="legend-item">
                     <span class="legend-color" style="background:#b76bbd"></span> South America
                     </span>
+                </div>
+                <div class="main-text" style="position:absolute; top:32%; left:82%; max-width: 200px; font-size: 20px;">Wow! Now I know every billionaires wealth journey!</div>
+                <div class="person-right">
+                    <img src="imgs/speech.png" class="speech-race">
+                </div>
+                <div class="person-right">
+                    <img src="imgs/race.png" class="person-race">
                 </div>
             </div>
             <div class="scroll-steps-container" id="racebar-steps-container">
@@ -167,8 +177,6 @@
                     <div class="arrow"></div>
                   </div>
                 </div>
-              
-
                 <div class="currency-wheel">
                     <div class="circle"><img src="BG/dollar.svg" alt="USD"></div>
                     <div class="circle"><img src="BG/euro.svg" alt="EUR"></div>
@@ -181,9 +189,8 @@
                     <div class="circle"><img src="BG/dollar.svg" alt="USD"></div>
                 </div>
               </div>
-          
-            <script src="BG.js"></script>
-          </body>
+        </body>
+        
         <!-- CHOROPLETH MAP CHART -->
         <!-- HAS TOOLTIP MAKE SURE STILL WORKS -->
         <div id="maptooltip" class="maptooltip"></div>
@@ -191,10 +198,18 @@
             <div class="svg-container" id="mapchart-container">
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Global Billionaire Wealth by Country</h1>
+                        <h1 class="text-center">Where do billionaires come from? Let's find out...</h1>
                     </header>
                 </div>
-                <svg id="mapChart"></svg></div>
+                <svg id="mapChart"></svg>
+                <div class="main-text" style="position:absolute; top:32%; left:6%; max-width: 200px; font-size: 20px;">Oh! So most billionaires come from the US!</div>
+                <div class="person-left">
+                    <img src="imgs/speech.png" class="speech-country">
+                </div>
+                <div class="person-left">
+                    <img src="imgs/country.png" class="person-country">
+                </div>
+            </div>
             <div class="scroll-steps-container" id="mapchart-steps-container">
                 <!-- js injects x amount of steps here -->
             </div>
@@ -205,7 +220,7 @@
             <div class="svg-container" id="histogram-container">
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Age at which Billionaires made their first billion</h1>
+                        <h1 class="text-center">How old were they when they got so rich? Let me find out!</h1>
                     </header>
                 </div>
                 <svg id="histogram_svg"></svg>
@@ -213,7 +228,7 @@
                 <div class="info_box" id="left-highlight"><p>Youngest are billionaires who made their money through inherited shares or company at 18/19</p></div>
                 <div class="info_box" id="right-highlight"><p>It's never too late to start! A few billionaires made their first billion between ages 95-100</p></div>
             
-                <div class="person">
+                <div class="person-right">
                     <img src="imgs/age-people.png" class="person-img">
                 </div>
             
@@ -228,8 +243,8 @@
             <div class="svg-container" id="glyph-container">
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Who Wants to Become a Billionaire?</h1>
-                        <h1 class="text-center">Click a glyph to reveal their educational journey!</h1>
+                        <h1 class="text-center">Do I need a degree to be a billionaire?</h1>
+                        <h1 class="text-center" style="font-size: 20px;">Click a glyph to reveal their educational journey!</h1>
                     </header>
                 </div>
                 <div class="dropdown-container" style="text-align:center; margin:20px;">
@@ -252,6 +267,13 @@
                     <p><strong>Graduation Year:</strong> <span id="popup-year"></span></p>
                     <p><strong>Education Status:</strong> <span id="popup-status"></span></p>
                 </div>
+                <div class="main-text" style="position:absolute; top:76%; left:69%; max-width: 200px; font-size: 20px;">Okay books, let's make those billions happen!💰</div>
+                <div class="person-right">
+                    <img src="imgs/speech.png" class="speech-edu">
+                </div>
+                <div class="person-right">
+                    <img src="imgs/edu.png" class="person-edu">
+                </div>
             </div>
             <div class="scroll-steps-container" id="glyph-steps-container">
                 <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
@@ -267,7 +289,7 @@
             <div class="svg-container" id="sankey-container">
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Progressive Inheritance Sankey (Full Path Memory)</h1>
+                        <h1 class="text-center">Did they forge their own path or follow a golden one? Gotta find out!</h1>
                     </header>
                 </div>
                 <div id="g-dist" class="controls"style="text-align:center; margin:20px;">
@@ -275,6 +297,13 @@
                     <button id="reset-btn">Reset Chart</button>
                 </div>
                 <svg id="sankey_svg"></svg>
+                <div class="main-text" style="position:absolute; top:45%; left:5%; max-width: 200px; font-size: 20px;">How do I know which path is right?</div>
+                <div class="person-left">
+                    <img src="imgs/speech.png" class="speech-sankey">
+                </div>
+                <div class="person-left">
+                    <img src="imgs/sankey.png" class="person-sankey">
+                </div>
             </div>
             <div class="scroll-steps-container" id="sankey-steps-container">
                 <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
@@ -290,10 +319,17 @@
             <div class="svg-container">            
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Bubble Chart</h1>
+                        <h1 class="text-center">What jobs make people billionaires?</h1>
                     </header>
                 </div>
                 <svg class="bubble-chart" id="bubble-chart"></svg>
+                <div class="main-text" style="position:absolute; top:34%; left:8%; max-width: 200px; font-size: 20px;">Now I know! Money makes money!</div>
+                <div class="person-left">
+                    <img src="imgs/speech.png" class="speech-industry">
+                </div>
+                <div class="person-left">
+                    <img src="imgs/industry.png" class="person-industry">
+                </div>
             </div>
             <div class="scroll-steps-container" id="bubble-steps-container"></div>
         </div>
@@ -304,13 +340,17 @@
             <div class="svg-container" id="bloom-container">
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Country GDP's effects on billionaire's networth</h1>
+                        <h1 class="text-center">Do billionaires have more money than countries? Tell me more!</h1>
                     </header>
                 </div>
                 <svg id="bloom_svg"></svg>
-                <div id="bloom-left-highlight" style="background-color: rgb(0,0,0,0);"><p>Each country's central circle grows with its GDP, 
-                    while the number of dollar bills blooming around it shows the total net worth of billionaires in that country.</p><p> This visualization highlights the top 20 countries 
-                    by total net worth of billionaires (1 Petal ≈ $10 Billion).</p></div>
+                <div class="main-text" style="position:absolute; top:28%; left:9%; max-width: 220px; font-size: 20px;">Hmm... Big circle means the country's rich, and the petals show billionaire's total money.</div>
+                <div class="person-left">
+                    <img src="imgs/speech.png" class="speech-bloom">
+                </div>
+                <div class="person-left">
+                    <img src="imgs/bloom.png" class="person-bloom">
+                </div>
             </div>
             <div class="scroll-steps-container" id="bloom-steps-container">
                 <!-- js injects x amount of steps here -->
@@ -322,7 +362,7 @@
             <div class="svg-container" id="gender-container">
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Gender ratio in various industries</h1>
+                        <h1 class="text-center">Are most billionaires men or women?</h1>
                     </header>
                 </div>
                 <div id="g-dist" style="text-align:center; margin:20px;">
@@ -345,7 +385,7 @@
             <div class="svg-container" id="cluster-container">
                 <div class="header">
                     <header>
-                        <h1 class="text-center">Top 5 Billionaires' Net Wealth</h1>
+                        <h1 class="text-center">How much are the top 5 Billionaires' worth?</h1>
                     </header>
                 </div>
                 <svg id="dynamicClusterChart"></svg>
@@ -353,7 +393,22 @@
             <div class="scroll-steps-container" id="cluster-steps-container">
             </div>
         </div>
+
+        <!-- LAST PAGE -->
+        <div class="svg-scroll-container" id="last-page">
+            <div class="svg-container" id="last-container">
+                  <div id="last-page">
+                    <h1 class="main-title">Every billionaire starts with a dream ✨✨</h1>
+                    <h1 class="main-title" style="top:32%">Now it's your turn!</h1>
+                  </div>
+                <div class="person-right">
+                    <img src="imgs/end.png" class="person-end">
+                </div>
+            </div>
+        </div>
+
         <!-- call all scripts -->
+        <script type="module" src="js/BG.js"></script>
         <script type="module" src="js/first_page.js"></script>
         <script type="module" src="js/mapscript.js"></script>
         <script type="module" src="js/clusterScript.js"></script>

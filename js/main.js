@@ -416,7 +416,7 @@ function updateGenderIcons(category) {
     const icons = genderSvg.selectAll("image").data(iconsData);
     icons.exit().remove();
 
-    var iconSize = 80
+    var iconSize = 140
 
     icons.enter().append("image")
         .attr("width",iconSize)

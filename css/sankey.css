@@ -41,3 +41,7 @@ h2 { text-align: center; margin-top: 20px; }
 .sankey-node-highlight {
     filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
 }
+
+#sankey_svg {
+    top: 35%;
+}

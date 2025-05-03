@@ -1,7 +1,15 @@
-.person {
+.person-right {
     position: absolute;
     bottom: 30px;
     left: 75vw;
+    display: flex;
+    align-items: flex-start;
+    z-index: 10;
+}
+.person-left {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
     display: flex;
     align-items: flex-start;
     z-index: 10;
@@ -24,6 +32,10 @@
 }
 
 #front-page {
+    background-image: url('../imgs/front_page.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     width: 100%;
     height: 100%;
 }
@@ -41,11 +53,120 @@
 }
 .main-subtitle{
     position: absolute;
-    top: 55%;
-    left: 50%;
+    top: 78%;
+    left: 35%;
+    width: 63%;
     transform: translate(-50%, -50%);
-    font-size: 2rem;
-    color: rgb(0, 0, 0);
+    font-size: 1.75rem;
+    color: rgb(67, 46, 31);
     text-align: center;
     font-family: 'Pacifico', cursive;
+}
+
+.main-text{
+    font-size: 2rem;
+    color: rgb(73, 54, 40);
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-weight: 10;
+}
+
+.header h1 {
+    color: #2a3f5f;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    color: rgb(67, 46, 31);
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-weight: 100;
+}
+
+.header{
+    margin: 0 100px 0 100px;
+}
+
+.person-race {
+    transform: translateX(40%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+.speech-race {
+    transform: translate(30%, -140%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+
+.person-country {
+    transform: translateX(0%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+.speech-country {
+    transform: translate(15%, -140%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+
+.person-edu {
+    transform: translateX(40%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+.speech-edu {
+    transform: translate(-50%, -10%) scale(-1, -1);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+
+.person-sankey {
+    transform: translateX(0%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+.speech-sankey {
+    transform: translate(10%, -100%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+
+.person-industry {
+    transform: translateX(0%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+.speech-industry {
+    transform: translate(30%, -140%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+
+.person-bloom {
+    transform: translateX(0%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+.speech-bloom {
+    transform: translate(35%, -150%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+
+.person-end {
+    transform: translateX(-40%);
+    width: 310px;
+    height: auto;
+    object-fit: contain;
 }

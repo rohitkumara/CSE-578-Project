@@ -178,12 +178,14 @@ function drawFlowers(){
     if(year_text.empty()){
         year_text = svg.append("text")
             .attr("class", "year-text")
-            .attr("x", innerWidth - 50)
-            .attr("y", margin.top + 30)
-            .attr("text-anchor", "end")
-            .attr("font-weight", "bold")
-            .attr("font-size", "36px")
-            .text(current_year)
+            .attr("x", width/2)  
+            .attr("y", height)
+            .attr("text-anchor", "middle")
+            .style("font-size", "35px")
+            .style("font-weight", "bold")
+            .style("fill", "#555555")
+            .style("opacity", 0.9)
+            .text(current_year);
     }
     year_text.transition().duration(50)
         .text(current_year);
