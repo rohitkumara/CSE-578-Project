@@ -251,8 +251,8 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
 
   // industry dropdown + gender row
   const allowedIndustries = [
-    "Media", "Automotive", "Construction & Engineering", "Energy", "Food & Beverage", "Gaming","Hotels & Resorts", "Logistics",
-    "Oil","Pharmaceuticals","Retail", "Services"
+    "Media", "Agriculture","Automotive", "Construction & Engineering","Electronics","Coal", "Energy", "Food & Beverage", "Gaming","Hotels & Resorts", "Logistics",
+    "Oil","Pharmaceuticals","Retail", "Services","Technology"
   ];
   const categories = allowedIndustries.filter(ind =>
     raw.some(d => d.industry === ind)
