@@ -1,0 +1,81 @@
+/* ───────────────────────────────────────────────────────────────
+   Complete CSS for “Arrow Strip + Rotating Currency Wheel”
+   ─────────────────────────────────────────────────────────────── */
+
+/* 1) Wrapper: holds the strip + wheel in one row, no wrapping */
+.currency-wheel-wrapper {
+    display: flex;           
+    align-items: center;     
+    flex-wrap: nowrap;       
+    overflow-x: hidden;      /* hide overflow when sliding */
+    padding: 20px 0;         /* vertical spacing only */
+    box-sizing: border-box;  
+    width: 100vw;
+  left: 50%;
+  }
+  
+  /* 2) Green strip behind the arrow, flush to the left */
+  .arrow-strip {
+    position: relative;
+    flex: 0 0 auto;  
+    left : -300px;        
+    width: calc(100% - 580px); /* fill the area minus arrow-circle width */
+    height: 80px;            
+    background: #a5f36a;     /* light green */
+    border-radius: 0 40px 40px 0;
+    margin-right: 20px;      /* gap before the currency wheel */
+    will-change: transform;  
+  }
+  
+  /* 3) Dark circle containing the arrow */
+  .arrow-circle {
+    position: absolute;
+    top: 0; 
+    right: 0;
+    margin-left: 100px;
+    width: 80px; 
+    height: 80px;
+    background: #152600;     /* dark green */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* 4) The “>” arrow inside the circle */
+  .arrow {
+    width: 0; 
+    height: 0;
+    border-top:    10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left:   16px solid #a5f36a;  /* same green as strip */
+  }
+  
+  /* 5) The scrolling row of currencies */
+  .currency-wheel {
+    display: flex;
+    transform: translateX(0) rotate(0deg);
+    transition: none;        /* instant reaction to scroll */
+    will-change: transform;
+    margin-left: -250px;
+  }
+  
+  /* 6) Each currency “wheel” */
+  .circle {
+    flex: 0 0 80px;          /* fixed-size circles */
+    width: 80px; 
+    height: 80px;
+    margin: 0 10px;          /* space between them */
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    user-select: none;
+    transform-origin: center center;  /* spin in place */
+  }
+  
