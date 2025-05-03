@@ -426,7 +426,7 @@ function updateGenderIcons(category) {
         .merge(icons)
         .attr("href", d=>"icons/"+d+".png")
         .attr("x", function(d, i){
-            return W/2 + (i%5)*(iconSize+8) - 2*(iconSize+8);
+            return (W/2) - (2.5*(iconSize+8)) + (i%5)*(iconSize+8);
         })
         .attr("y", function(d,i){
             return ((Math.floor(i/5)+1)*H)/3;
