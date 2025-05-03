@@ -1,33 +1,29 @@
-/* ───────────────────────────────────────────────────────────────
-   Complete CSS for “Arrow Strip + Rotating Currency Wheel”
-   ─────────────────────────────────────────────────────────────── */
 
-/* 1) Wrapper: holds the strip + wheel in one row, no wrapping */
 .currency-wheel-wrapper {
     display: flex;           
     align-items: center;     
     flex-wrap: nowrap;       
-    overflow-x: hidden;      /* hide overflow when sliding */
-    padding: 20px 0;         /* vertical spacing only */
+    overflow-x: hidden;      
+    padding: 20px 0;         
     box-sizing: border-box;  
     width: 100vw;
   left: 50%;
   }
   
-  /* 2) Green strip behind the arrow, flush to the left */
+
   .arrow-strip {
     position: relative;
     flex: 0 0 auto;  
     left : -300px;        
-    width: calc(100% - 580px); /* fill the area minus arrow-circle width */
+    width: calc(100% - 580px); 
     height: 80px;            
-    background: #a5f36a;     /* light green */
+    background: #a5f36a;   
     border-radius: 0 40px 40px 0;
-    margin-right: 20px;      /* gap before the currency wheel */
+    margin-right: 20px;      
     will-change: transform;  
   }
   
-  /* 3) Dark circle containing the arrow */
+ 
   .arrow-circle {
     position: absolute;
     top: 0; 
@@ -35,37 +31,36 @@
     margin-left: 100px;
     width: 80px; 
     height: 80px;
-    background: #152600;     /* dark green */
+    background: #152600;    
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   
-  /* 4) The “>” arrow inside the circle */
   .arrow {
     width: 0; 
     height: 0;
     border-top:    10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left:   16px solid #a5f36a;  /* same green as strip */
+    border-left:   16px solid #a5f36a;  
   }
   
-  /* 5) The scrolling row of currencies */
+ 
   .currency-wheel {
     display: flex;
     transform: translateX(0) rotate(0deg);
-    transition: none;        /* instant reaction to scroll */
+    transition: none;        
     will-change: transform;
     margin-left: -250px;
   }
   
-  /* 6) Each currency “wheel” */
+
   .circle {
-    flex: 0 0 80px;          /* fixed-size circles */
+    flex: 0 0 80px;         
     width: 80px; 
     height: 80px;
-    margin: 0 10px;          /* space between them */
+    margin: 0 10px;          
     background: #fff;
     border: 2px solid #ddd;
     border-radius: 50%;
@@ -76,6 +71,89 @@
     font-weight: bold;
     font-size: 1.1rem;
     user-select: none;
-    transform-origin: center center;  /* spin in place */
+    transform-origin: center center;  
+  }
+  
+ /* Contributors Section */
+#contributors {
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    padding: 60px 20px;
+  }
+  #contributors .contributors-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  #contributors h3 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #333;
+    position: relative;
+  }
+  #contributors h3::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #ff7e5f;
+    margin: 8px auto 0;
+    border-radius: 2px;
+  }
+  
+  .contributors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    justify-content: center;
+  }
+  
+  .contributor-card {
+
+    flex: 0 1 calc(33.333% - 20px); 
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .contributor-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+  }
+  
+  .avatar {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    background: #ff7e5f;
+    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  
+  .contributor-card .info {
+    text-align: left;
+  }
+  .contributor-card .info strong {
+    display: block;
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+    color: #333;
+  }
+  .contributor-card .info a {
+    font-size: 0.9rem;
+    color: #4f8bc9;
+    text-decoration: none;
+  }
+  .contributor-card .info a:hover {
+    text-decoration: underline;
   }
   

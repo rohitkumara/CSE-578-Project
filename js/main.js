@@ -1,8 +1,4 @@
-// ——————————————————————————————————————————————————————————
-//  main.js
-// ——————————————————————————————————————————————————————————
 
-// 1) Country ↔ Region, Region ↔ Color, Country ↔ Flag, Industry normalization
 const countryRegion = {
   "United States":"North America","Canada":"North America","Mexico":"North America","Belize":"North America",
   "Panama":"North America","St. Kitts and Nevis":"North America",
@@ -193,7 +189,7 @@ function toggleInlineDetail(datum, containerG, history) {
         );
   }
 
-  // SHIFT ALL BAR-GROUPS (and name-labels) down by detailHeight if needed
+
   chart.selectAll(".bar-group")
     .transition().duration(300)
     .attr("transform", d => {
@@ -254,7 +250,13 @@ d3.csv("dataset/all_billionaires_1997_2024.csv").then(raw => {
   ).selectAll("text").style("text-anchor","middle");
 
   // industry dropdown + gender row
-  const categories = Array.from(new Set(raw.map(d=>d.industry))).sort();
+  const allowedIndustries = [
+    "Media", "Agriculture","Automotive", "Construction & Engineering","Electronics","Coal", "Energy", "Food & Beverage", "Gaming","Hotels & Resorts", "Logistics",
+    "Oil","Pharmaceuticals","Retail", "Services","Technology"
+  ];
+  const categories = allowedIndustries.filter(ind =>
+    raw.some(d => d.industry === ind)
+  );
   d3.select("#industry-select")
     .selectAll("option").data(categories)
     .enter().append("option")
