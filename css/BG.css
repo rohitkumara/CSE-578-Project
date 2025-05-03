@@ -165,7 +165,7 @@
   .background-fixed {
     position: relative;
     height: 70vh;
-    background-image: url("../BG/BB.jpeg");
+    background-image: url("../BG/BB.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

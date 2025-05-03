@@ -15,12 +15,6 @@
     z-index: 10;
 }
 
-.person-img {
-    width: 360px;
-    height: auto;
-    object-fit: contain;
-}
-
 #first-page {
     position: fixed;
     top: 0;
@@ -188,6 +182,19 @@
 .person-end {
     transform: translateX(10%);
     width: 310px;
+    height: auto;
+    object-fit: contain;
+}
+
+.person-hist {
+    transform: translateX(0%);
+    width: 360px;
+    height: auto;
+    object-fit: contain;
+}
+.speech-hist {
+    transform: translate(30%, -90%);
+    width: 240px;
     height: auto;
     object-fit: contain;
 }

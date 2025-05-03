@@ -222,50 +222,35 @@ function highlightHistogram(step){
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom; 
 
+    // <div class="info_box" id="middle-highlight"><p>Most billionaires made their first billion at the age 55-60</p></div>
+    // <div class="info_box" id="left-highlight"><p>Youngest are billionaires who made their money through inherited shares or company at 18/19</p></div>
+    // <div class="info_box" id="right-highlight"><p>It's never too late to start! A few billionaires made their first billion between ages 95-100</p></div>
+
+
     // highlight the 3 marks
     if(step == 19){
-        var highlight = d3.select("#middle-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 1)
-        highlight = d3.select("#left-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 0)
-        highlight = d3.select("#right-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 0)
+        var test = document.getElementById("hist_text");
+        var img = document.getElementById("speech-hist");
+        img.style.opacity = 1;
+        test.innerHTML = "Most billionaires made their first billion at the age 55-60";
     }
     else if(step == 20){
-        var highlight = d3.select("#middle-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 0)
-        highlight = d3.select("#left-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 1)
-        highlight = d3.select("#right-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 0)
+        var test = document.getElementById("hist_text");
+        var img = document.getElementById("speech-hist");
+        img.style.opacity = 1;
+        test.innerHTML = "Youngest got rich from inherited shares / company at 18!";
     }
     else if(step == 21){
-        var highlight = d3.select("#middle-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 0)
-        highlight = d3.select("#left-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 0)
-        highlight = d3.select("#right-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 1)
+        var test = document.getElementById("hist_text");
+        var img = document.getElementById("speech-hist");
+        img.style.opacity = 1;
+        test.innerHTML = "It’s never too late—some made billions at age 95+!";
     }
     else {
-        var highlight = d3.select("#middle-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 0)
-        highlight = d3.select("#left-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 0)
-        highlight = d3.select("#right-highlight")
-        highlight.transition().duration(500)
-            .style("opacity", 0)
+        var test = document.getElementById("hist_text");
+        test.innerHTML = "";
+        var img = document.getElementById("speech-hist");
+        img.style.opacity = 0;
     }
 
 }
@@ -279,6 +264,10 @@ function handleScroll(){
             debug: false
         })
         .onStepEnter(function(d){
+            var test = document.getElementById("hist_text");
+            test.innerHTML = "";
+            var img = document.getElementById("speech-hist");
+            img.style.opacity = 0;
             const step = d.index;
             updateHistogram(step);
             var highlight = d3.select("#middle-highlight")

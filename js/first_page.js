@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function() {
             transition = true;
             // Wait for transition to complete then clean up
             setTimeout(function() {
-                console.log("Transition complete, cleaning up");
                 firstPage.style("display", "none");
             }, 500);
         }
@@ -37,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function() {
             secondPage.style("transform", "translateX(100%)");
             // Wait for transition to complete then clean up
             setTimeout(function() {
-                console.log("Transition complete, cleaning up");
                 firstPage.style("display", "block");
             }, 500);
         }
