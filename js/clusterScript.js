@@ -83,9 +83,9 @@ const scroller = scrollama();
             
             svg.append("text")
             .attr("class", "year-label")
-            .attr("x", width - 100)  
-            .attr("y", 60)
-            .attr("text-anchor", "end")
+            .attr("x", width/2)  
+            .attr("y", height - 50)
+            .attr("text-anchor", "middle")
             .style("font-size", "35px")
             .style("font-weight", "bold")
             .style("fill", "#555555")

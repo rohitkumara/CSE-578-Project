@@ -99,6 +99,19 @@
     object-fit: contain;
 }
 
+.person-race2 {
+    transform: translateX(-10%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+.speech-race2 {
+    transform: translate(-5%, -140%);
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+
 .person-country {
     transform: translateX(0%);
     width: 240px;
@@ -165,7 +178,7 @@
 }
 
 .person-end {
-    transform: translateX(-40%);
+    transform: translateX(10%);
     width: 310px;
     height: auto;
     object-fit: contain;
