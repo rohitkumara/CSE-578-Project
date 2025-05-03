@@ -197,10 +197,7 @@
                     <div class="circle"><img src="BG/dollar.svg" alt="USD"></div>
                 </div>
               </div>
-          
-            <script src="js/BG.js"></script>
           </body>
-        </body>
         
         <!-- CHOROPLETH MAP CHART -->
         <!-- HAS TOOLTIP MAKE SURE STILL WORKS -->
@@ -377,11 +374,12 @@
                         <h1 class="text-center" style="font-size: 20px;">Select the industry to know more!</h1>
                     </header>
                 </div>
-                <div id="g-dist" style="text-align:center; margin:20px;">
+                <div id="g-dist" style="text-align:center; margin:20px; position: relative;">
                     <label for="industry-select" class="dropdown_style">Select Industry:</label>
-                    <select id="industry-select"></select>
+                    <select id="industry-select" style="z-index: 10000; position: relative;">
+                    </select>
                 </div>
-                <svg id="gender-chart-svg" width="960" height="60"></svg>
+                <svg id="gender-chart-svg" style="z-index: 1;"></svg>
             </div>
             <div class="scroll-steps-container" id="gender-steps-container">
                 <div class="histstep" data-step="step0" data-scrollama-index="0"></div>
