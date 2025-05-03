@@ -17,7 +17,7 @@
     left : -300px;        
     width: calc(100% - 580px); 
     height: 80px;            
-    background: #a5f36a;   
+    background: #FFFACD;   
     border-radius: 0 40px 40px 0;
     margin-right: 20px;      
     will-change: transform;  
@@ -31,7 +31,7 @@
     margin-left: 100px;
     width: 80px; 
     height: 80px;
-    background: #152600;    
+    background: #B0E0E6;    
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -43,7 +43,7 @@
     height: 0;
     border-top:    10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left:   16px solid #a5f36a;  
+    border-left:   16px solid #FFFACD;  
   }
   
  
