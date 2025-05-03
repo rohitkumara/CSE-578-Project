@@ -9,6 +9,8 @@
         <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
         <script type="module" src="https://unpkg.com/scrollama"></script>
 
+        <!-- Font -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
         <!-- css files -->
         <link rel="stylesheet" href="css/body.css">
         <link rel="stylesheet" href="css/rarasani.css">
@@ -18,6 +20,7 @@
         <link rel="stylesheet" href="css/glyph.css">
         <link rel="stylesheet" href="css/sankey.css">
         <link rel="stylesheet" href="css/cluster.css">
+        <link rel="stylesheet" href="css/person.css">
         <style>
             .hero {
                   padding-top: 0; 
@@ -41,11 +44,17 @@
     </head>
 
     <body>
-        <div class="hero"></div>
-        <hr class="hero-divider" />
-
-        <h1 class="text-center">How to be a Billionaire?</h1>
-        <h3 class="text-center">Authors</h3>
+        <div class="svg-scroll-container" id="first-page">
+            <div class="svg-container" id="first-container">
+                  <div id="front-page">
+                    <h1 class="main-title">Who Wants to Be a Billionaire?</h1>
+                    <div class="main-subtitle">
+                        <p>Have you ever wondered what it really takes to join the billionaire club? Is it Education? Inheritance? Geography? Grit?</p>
+                        <p>This interactive story unpacks the data behind extreme wealth through a child's lens—one question at a time.</p>
+                    </div>
+                  </div>
+            </div>
+        </div>
 
         <!-- PROFILE CARD CHART -->
         <div class="svg-scroll-container" id="cards-scroll-container">
@@ -177,6 +186,11 @@
                 <div class="info_box" id="middle-highlight"><p>Most billionaires made their first billion at the age 55-60</p></div>
                 <div class="info_box" id="left-highlight"><p>Youngest are billionaires who made their money through inherited shares or company at 18/19</p></div>
                 <div class="info_box" id="right-highlight"><p>It's never too late to start! A few billionaires made their first billion between ages 95-100</p></div>
+            
+                <div class="person">
+                    <img src="imgs/age-people.png" class="person-img">
+                </div>
+            
             </div>
             <div class="scroll-steps-container" id="histogram-steps-container">
                 <!-- js injects x amount of steps here -->
@@ -184,7 +198,6 @@
         </div>
 
         <!-- GLYPH CHART -->
-
         <div class="svg-scroll-container" id="glyph-distribution">
             <div class="svg-container" id="glyph-container">
                 <div class="header">
@@ -315,6 +328,7 @@
             </div>
         </div>
         <!-- call all scripts -->
+        <script type="module" src="js/first_page.js"></script>
         <script type="module" src="js/mapscript.js"></script>
         <script type="module" src="js/clusterScript.js"></script>
         <script type="module" src="js/chart_call.js"></script>
